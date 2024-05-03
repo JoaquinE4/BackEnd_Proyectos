@@ -1,0 +1,29 @@
+ 
+
+
+
+<div class="header container-fluid d-flex p-xl-4 align-items-center ">
+    <div class="   ">
+     <a href="/realtimeproducts" class="btn btn-primary  ">realTime</a>
+
+    </div>
+    <div class="container-fluid d-flex justify-content-center  ">
+    <h2>Bienvenido al desafio</h2>
+    </div>
+</div>
+  
+    <hr>
+    <div class="container d-flex  flex-column   justify-content-center   px-lg-5">
+      
+      <div class="d-flex      ">
+    <h3 class="text-center">Productos</h3>
+
+      </div>
+    
+    <ul class="list-group w-50 gap-3  ">
+  {{#each productos}}
+  <li class="list-group-item">Nombre: {{title}} <Br/> <p>Precio: {{price}}</p></li>
+  {{/each}}
+</ul>
+    </div>
+   

@@ -1,0 +1,137 @@
+[
+  {
+    "id": 1,
+    "title": "Frida Maceta",
+    "description": "Maceta con forma de Frida Kalo de 20 cm de alto",
+    "price": 30000,
+    "code": "b4cd",
+    "stock": 2,
+    "status": true,
+    "date": "2/4/2024"
+  },
+  {
+    "id": 2,
+    "title": "Gato Mate",
+    "description": "Mate con forma de gato",
+    "price": 25000,
+    "code": "b5cd",
+    "stock": 8,
+    "status": true,
+    "date": "2/4/2024"
+  },
+  {
+    "id": 4,
+    "title": "Gordita Voladoras",
+    "description": "Maceta colgante",
+    "price": 15000,
+    "code": "b7cd",
+    "stock": 4,
+    "status": true,
+    "date": "2/4/2024"
+  },
+  {
+    "id": 5,
+    "title": "Tetera",
+    "description": "Tetera de 500 ml",
+    "price": 15000,
+    "code": "b8cd",
+    "stock": 1,
+    "status": true,
+    "date": "2/4/2024"
+  },
+  {
+    "id": 6,
+    "title": "Gato Iman",
+    "description": "iman con forma de cara de gato",
+    "price": 2000,
+    "code": "b9cd",
+    "stock": 15,
+    "status": true,
+    "date": "2/4/2024"
+  },
+  {
+    "id": 7,
+    "title": "Gato cascavel",
+    "description": "Cascavel con forma de gato",
+    "price": 5000,
+    "code": "b0cd",
+    "stock": 8,
+    "status": true,
+    "date": "2/4/2024"
+  },
+  {
+    "id": 8,
+    "title": "Gato Chupetin",
+    "description": "Tutor de gato",
+    "price": 4500,
+    "code": "b1cd",
+    "stock": 10,
+    "status": true,
+    "date": "2/4/2024"
+  },
+  {
+    "id": 9,
+    "title": "Pajarito Tutor",
+    "description": "Tutor con forma de pajaro",
+    "price": 2000,
+    "code": "b2cd",
+    "stock": 20,
+    "status": true,
+    "date": "2/4/2024"
+  },
+  {
+    "id": 10,
+    "title": "Gato Recostado",
+    "description": "Maceta con forma gato recostado",
+    "price": 25000,
+    "code": "b3cd",
+    "stock": 2,
+    "status": true,
+    "date": "2/4/2024"
+  },
+  {
+    "id": "_1713291534972",
+    "title": "Gato Recostado",
+    "description": "Maceta con forma gato recostado",
+    "price": 25000,
+    "code": "b3c5d",
+    "stock": 2,
+    "status": true,
+    "date": "16/4/2024"
+  },
+  {
+    "id": "_1713301141938",
+    "title": {
+      "title": "Gatfgho fffssdssssssruMate",
+      "description": "Matfghe con forma de gato",
+      "price": 25000,
+      "thumbnail": "asfghreduasd",
+      "code": "b5dddderw5ñdfdskkkssssssdghcd",
+      "stock": 8
+    },
+    "status": true,
+    "date": "16/4/2024"
+  },
+  {
+    "id": "_1713301183951",
+    "title": "des de",
+    "description": "Matfghe con forma de gato",
+    "price": 25000,
+    "thumbnail": "desdes",
+    "code": "desdes",
+    "stock": 8,
+    "status": true,
+    "date": "16/4/2024"
+  },
+  {
+    "id": "_1713304645753",
+    "title": "desdddd de",
+    "description": "Matfghe con forma de gato",
+    "price": 25000,
+    "thumbnail": "desdes",
+    "code": "desdddddes",
+    "stock": 8,
+    "status": true,
+    "date": "16/4/2024"
+  }
+]
