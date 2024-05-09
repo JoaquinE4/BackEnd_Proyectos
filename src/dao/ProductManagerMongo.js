@@ -11,9 +11,13 @@ export default class ProductManager {
         return await ProductosModels.create(producto)
 
     }
-
+ 
     async getProducts() {
         return await ProductosModels.find().lean()
+    }
+
+    async getProductsPaginate(page) {
+        return await ProductosModels.paginate({}, {limit:10, page , lean:true})
     }
 
 
@@ -28,12 +32,12 @@ export default class ProductManager {
         const aModificar = await ProductosModels.findOneAndUpdate(id, updatedFields, { returnOriginal: false })
     }
 
-    deleteProduct(id) {
+    deleteProduct(filtro={}) {
 
-        return ProductosModels.deleteOne(id)
+        return ProductosModels.deleteOne(filtro)
     }
 
-
+  
 
 
 }

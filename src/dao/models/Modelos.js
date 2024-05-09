@@ -1,8 +1,9 @@
 import mongoose from "mongoose";
+import  paginate  from "mongoose-paginate-v2";
 
 const productosCollections = "product"
 
-const productosSchema = new mongoose.Schema(
+const productosSchema = new mongoose.Schema( 
     {
         id: Number,
         title: { type: String, required: true },
@@ -24,20 +25,31 @@ const productosSchema = new mongoose.Schema(
     }
 )
 
+productosSchema.plugin(paginate);
 
 export const ProductosModels = mongoose.model(
     productosCollections,
     productosSchema
 )
 
+
+
 const cartCollection = "carts"
 const cartSchema = new mongoose.Schema({
 
 
     id: Number,
-    products: Array
+    products:{type:[{
 
-}, {
+        product:{
+            type: mongoose.Types.ObjectId,
+            ref: "product"
+        },
+        quantity: Number
+
+    }]
+
+}}, {
     timestamps: true
 }
 

@@ -49,7 +49,7 @@ export const io = new Server(server)
   })
 
   socket.on("mensaje", async(nombre, mensaje)=>{
-   // mensajes.push({nombre, mensaje})
+   
    await mensajesModelo.create({user:nombre,message: mensaje})
    io.emit("nuevoMensaje", nombre, mensaje)
 })

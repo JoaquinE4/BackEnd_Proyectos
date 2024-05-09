@@ -2,40 +2,39 @@
   <div class="row d-flex p-xl-4 justify-content-between  align-items-center">
 
   <div class="col-md-4 d-flex   ">
-    <h2>Bienvenido al desafio</h2>
+    <h2>Tienda</h2>
   </div>
 
   <div class="col-md-3 d-flex gap-4   ">
-    <a href="/realtimeproducts" class="btn btn-primary">realTime</a>
-    <a href="/products" class="btn btn-primary">Productos</a>
+    <a href="/" class="btn btn-primary">Home</a>
     <a href="/carts" class="btn btn-primary">Carrito</a>
+    <a href="/chat" class="btn btn-primary">Chat</a>
 
   </div>
 </div>
   </div>
-
 <hr />
-<h3 class="text-center">Productos</h3>
 <div class="d-flex justify-content-center align-content-center gap-3 p-5">
 
   {{#if hasPrevPage}}
 
-    <a href="/?pagina={{prevPage}}" class="btn btn-primary">Pag.Ant.</a>
+    <a href="/products?pagina={{prevPage}}" class="btn btn-primary">Pag.Ant.</a>
 
   {{/if}}
-  <a href="/?pagina=1" class="btn btn-primary">Pag.1</a>
+  <a href="/products?pagina=1" class="btn btn-primary">Pag.1</a>
 
   {{#if hasNextPage}}
 
-    <a href="/?pagina={{nextPage}}" class="btn btn-primary">Pag. Sig.</a>
+    <a href="/products?pagina={{nextPage}}" class="btn btn-primary">Pag. Sig.</a>
 
   {{/if}}
-  <a href="/?pagina={{totalPages}}" class="btn btn-primary">Ult. Pag.</a>
+  <a href="/products?pagina={{totalPages}}" class="btn btn-primary">Ult. Pag.</a>
 
 </div>
+
 <div id="list-group" class="d-grid">
   <div class="row gap-2 justify-content-center pt-5">
-
+      <input type="text" value="{{carrito._id}}" id="carrito" hidden>
     {{#each productos}}
       <div class="col-sm-3">
 
@@ -44,11 +43,14 @@
             <h5 class="card-title"> {{title}}</h5>
             <p class="card-text">Descripcion: {{description}}</p>
             <p class="card-text">Precio: {{price}}</p>
+            <button class="btn btn-primary" onclick="comprar('{{_id}}')">Agregar
+              a carrito</button>
           </div>
         </div>
       </div>
 
     {{/each}}
+
 
   </div>
 
@@ -58,16 +60,20 @@
 
   {{#if hasPrevPage}}
 
-    <a href="/?pagina={{prevPage}}" class="btn btn-primary">Pag.Ant.</a>
+    <a href="/products?pagina={{prevPage}}" class="btn btn-primary">Pag.Ant.</a>
 
   {{/if}}
-  <a href="/?pagina=1" class="btn btn-primary">Pag.1</a>
+  <a href="/products?pagina=1" class="btn btn-primary">Pag.1</a>
 
   {{#if hasNextPage}}
 
-    <a href="/?pagina={{nextPage}}" class="btn btn-primary">Pag. Sig.</a>
+    <a href="/products?pagina={{nextPage}}" class="btn btn-primary">Pag. Sig.</a>
 
   {{/if}}
-  <a href="/?pagina={{totalPages}}" class="btn btn-primary">Ult. Pag.</a>
+  <a href="/products?pagina={{totalPages}}" class="btn btn-primary">Ult. Pag.</a>
 
 </div>
+
+<script src="/js/productos.js">
+
+</script>

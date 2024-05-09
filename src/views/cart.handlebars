@@ -1,0 +1,76 @@
+<div class="header container-fluid       ">
+  <div class="row d-flex p-xl-4 justify-content-between  align-items-center">
+
+  <div class="col-md-4 d-flex   ">
+    <h2>Carrito de Compras</h2>
+  </div>
+
+  <div class="col-md-3 d-flex gap-4   ">
+    <a href="/" class="btn btn-primary">Home</a>
+    <a href="/products" class="btn btn-primary">Productos</a>
+    <a href="/chat" class="btn btn-primary">Mensaje</a>
+
+  </div>
+</div>
+  </div>
+<hr />
+
+<div>
+
+  <input type="text"   value="{{carrito._id}}" id="carrito" hidden />
+
+  <div class="container p-5  d-flex flex-column justify-content-center align-content-center   " id="tabla" style="display: block;">
+
+      <div class=" w-auto h-auto  b 5   " id="tienda">
+        <h3>Su Carrito esta vacio</h3>
+        <p>vuelva a la tienda</p>
+              <a href="/products" class="btn w-auto  btn-primary">Tienda</a>
+
+      </div>
+
+
+
+
+    <table class="table  " id="table">
+      <thead>
+        <tr>
+          <th scope="col">Nombre</th>
+          <th scope="col">Descripción</th>
+          <th scope="col">Precio</th>
+          <th scope="col">Cantidad</th>
+          <th>
+            <button
+              class="btn btn-danger"
+              id="eliminar"
+              onclick="eliminarTodo()"
+            >Eliminar</button>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each carrito.products}}
+          <tr>
+            <td>{{product.title}}</td>
+            <td>{{product.description}}</td>
+            <td>{{product.price}}</td>
+            <td>{{quantity}}</td>
+            <td><button
+                class="btn btn-primary"
+                id="eliminar"
+                onclick="eliminar('{{product._id}}')"
+              >Eliminar</button></td>
+
+          </tr>
+        {{/each}}
+      </tbody>
+    </table>
+  </div>
+
+</div>
+
+<div id="mensajeContenedor" style="display: none;">
+    <p>No hay productos disponibles.</p>
+    <button id="botonAgregar">Agregar Producto</button>
+</div>
+
+<script src="/js/carrito.js"></script>
