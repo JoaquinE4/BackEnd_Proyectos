@@ -19,12 +19,10 @@ const comprar = async (pid) => {
         let datos = await respuesta.json();
         console.log(datos);
         Toastify({
-
           text: `Producto con ID ${pid} fue agregado`,
-          
-          duration: 3000
-          
-          }).showToast();
+
+          duration: 3000,
+        }).showToast();
       }
     } catch (error) {
       console.error("Error al realizar la solicitud:", error);
@@ -35,4 +33,3 @@ const comprar = async (pid) => {
     );
   }
 };
-

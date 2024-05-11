@@ -13,7 +13,7 @@ const list = document.getElementById("list-group");
 socket.on("nuevoProducto", (newProduct) => {
   console.log(newProduct);
   list.innerHTML += ` 
-    <div class="col-sm-3">
+    <div class="col-sm-3" data-aos="fade-up">
     <div class="card">
     <div class="card-body">
       <h5 class="card-title"> ${newProduct.title}</h5>
@@ -29,7 +29,7 @@ socket.on("delete", (productos) => {
   list.innerHTML = "";
   productos.map((p) => {
     list.innerHTML += `
-        <div class="col-sm-3">
+        <div class="col-sm-3 " data-aos="fade-up">
         <div class="card">
         <div class="card-body">
           <h5 class="card-title"> ${p.title}</h5>

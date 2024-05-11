@@ -1,0 +1,14 @@
+<h2>Registro</h2>
+
+<div class=" container ">
+
+    <form action="/api/sessions/registro" method="post">
+        <input type="text" name="user" placeholder="ingrese user name">
+        <input type="email" name="email" placeholder="ingrese correo electronico">
+        <input type="password" name="password" placeholder="ingrese contraseña">
+        <br>
+        <button type="submit" value="Registrar" ></button>
+    </form>
+
+
+</div>

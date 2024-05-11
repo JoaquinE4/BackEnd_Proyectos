@@ -11,12 +11,14 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "cookie-parser": "^1.4.6",
     "crypto": "^1.0.1",
     "express": "^4.18.3",
     "express-handlebars": "^7.1.2",
+    "express-session": "^1.18.0",
     "mongoose": "^8.3.2",
     "mongoose-paginate-v2": "^1.8.0",
     "socket.io": "^4.7.5"
   },
-  "description": ""
+  "description": "PostMan EndoPoints: https://documenter.getpostman.com/view/34678272/2sA3JM5fsD"
 }

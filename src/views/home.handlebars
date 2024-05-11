@@ -1,43 +1,46 @@
-<div class="header container-fluid       ">
+<div class="header container-fluid " >
   <div class="row d-flex p-xl-4 justify-content-between  align-items-center">
 
   <div class="col-md-4 d-flex   ">
-    <h2>Bienvenido al desafio</h2>
+    <h2    style="color: white;">Bienvenido al desafio</h2>
   </div>
 
-  <div class="col-md-3 d-flex gap-4   ">
-    <a href="/realtimeproducts" class="btn btn-primary">realTime</a>
-    <a href="/products" class="btn btn-primary">Productos</a>
-    <a href="/carts" class="btn btn-primary">Carrito</a>
+    
+  
+  <div class="col-md-4 d-flex gap-3 align-items-center align-content-center justify-content-end  ">
+    <a  href="/realtimeproducts" class="btn btna ">Real time</a>
+    <a   href="/products" class="btn  btna ">Tienda</a>
+    <a   href="/carts" class="btn btna  ">Carrito</a>
+    {{>menu}}
 
   </div>
+ 
 </div>
   </div>
 
-<hr />
-<h3 class="text-center">Productos</h3>
-<div class="d-flex justify-content-center align-content-center gap-3 p-5">
+ 
+ <div class="d-flex justify-content-center align-content-center gap-3 p-5">
 
   {{#if hasPrevPage}}
 
-    <a href="/?pagina={{prevPage}}" class="btn btn-primary">Pag.Ant.</a>
+    <a href="/?pagina={{prevPage}}" class="btn btna">Pag.Ant.</a>
 
   {{/if}}
-  <a href="/?pagina=1" class="btn btn-primary">Pag.1</a>
+  <a href="/?pagina=1" class="btn btna">Pag.1</a>
 
   {{#if hasNextPage}}
 
-    <a href="/?pagina={{nextPage}}" class="btn btn-primary">Pag. Sig.</a>
+    <a href="/?pagina={{nextPage}}" class="btn btna">Pag. Sig.</a>
 
   {{/if}}
-  <a href="/?pagina={{totalPages}}" class="btn btn-primary">Ult. Pag.</a>
+  <a href="/?pagina={{totalPages}}" class="btn btna">Ult. Pag.</a>
 
 </div>
 <div id="list-group" class="d-grid">
-  <div class="row gap-2 justify-content-center pt-5">
+  <div class="row gap-5 justify-content-center pt-5">
 
     {{#each productos}}
-      <div class="col-sm-3">
+      <div class="col-sm-3 s"  data-aos="zoom-out">
 
         <div class="card">
           <div class="card-body">
@@ -58,16 +61,16 @@
 
   {{#if hasPrevPage}}
 
-    <a href="/?pagina={{prevPage}}" class="btn btn-primary">Pag.Ant.</a>
+    <a href="/?pagina={{prevPage}}" class="btn btna">Pag.Ant.</a>
 
   {{/if}}
-  <a href="/?pagina=1" class="btn btn-primary">Pag.1</a>
+  <a href="/?pagina=1" class="btn btna">Pag.1</a>
 
   {{#if hasNextPage}}
 
-    <a href="/?pagina={{nextPage}}" class="btn btn-primary">Pag. Sig.</a>
+    <a href="/?pagina={{nextPage}}" class="btn btna">Pag. Sig.</a>
 
   {{/if}}
-  <a href="/?pagina={{totalPages}}" class="btn btn-primary">Ult. Pag.</a>
+  <a href="/?pagina={{totalPages}}" class="btn btna">Ult. Pag.</a>
 
 </div>

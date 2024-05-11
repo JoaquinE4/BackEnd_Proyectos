@@ -1,29 +1,28 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chat Handlebars</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="styles.css">
-</head>
-<body>
+<div class="header container-fluid "  >
+  <div class="row d-flex p-xl-4 justify-content-between  align-items-center">
 
-<header class="container-fluid d-flex headd flex-column">
-    <h2>Chat Handlebars</h2>
-    <a href="/" class="btn btna btn-primary ">Home</a>
-</header>
+  <div class="col-md-4 d-flex   ">
+    <h2   style="color: white;">Chat</h2>
+  </div>
 
-<hr>
+    
+  
+  <div class="col-md-4 d-flex gap-3 align-items-center align-content-center justify-content-end  ">
+    <a   href="/" class="btn btna ">Home</a>
+    {{>menu}}
 
-<main class="container-fluid d-flex flex-column  aling-items-center">
-    <div id="mensajes">
+  </div>
+ 
+</div>
+  </div>
+<div class="container  d-flex flex-column justify-content-center align-items-center p-3 align-content-center ">
+    <div id="mensajes" class="w-50 sas">
 
     </div>
     <input type="text" id="mensaje">
-</main>
+</div>
 
-<br>
+ 
 
 
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
@@ -31,5 +30,4 @@
 <script src="/socket.io/socket.io.js"></script>
 <script src="/js/chat.js"></script>
 
-</body>
-</html>
+ 
