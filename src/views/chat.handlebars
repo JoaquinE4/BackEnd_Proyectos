@@ -1,33 +1,31 @@
-<div class="header container-fluid "  >
+<div class="header container-fluid ">
   <div class="row d-flex p-xl-4 justify-content-between  align-items-center">
 
-  <div class="col-md-4 d-flex   ">
-    <h2   style="color: white;">Chat</h2>
-  </div>
+    <div class="col-md-4 d-flex   ">
+      <h2 style="color: white;">Chat</h2>
+    </div>
 
-    
-  
-  <div class="col-md-4 d-flex gap-3 align-items-center align-content-center justify-content-end  ">
-    <a   href="/" class="btn btna ">Home</a>
-    {{>menu}}
 
-  </div>
- 
-</div>
-  </div>
-<div class="container  d-flex flex-column justify-content-center align-items-center p-3 align-content-center ">
-    <div id="mensajes" class="w-50 sas">
+
+    <div class="col-md-4 d-flex gap-3 align-items-center align-content-center justify-content-end  ">
+      <a href="/" class="btn btna ">Home</a>
+      {{>menu}}
 
     </div>
-    <input type="text" id="mensaje">
+
+  </div>
+</div>
+<div class="container  d-flex flex-column justify-content-center align-items-center p-3 align-content-center ">
+  <div id="mensajes" class="w-50 sas">
+
+  </div>
+  <input type="text" id="mensaje">
 </div>
 
- 
+
 
 
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="/socket.io/socket.io.js"></script>
 <script src="/js/chat.js"></script>
-
- 

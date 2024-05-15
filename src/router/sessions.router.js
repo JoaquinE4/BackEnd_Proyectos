@@ -6,8 +6,8 @@ export const router = Router();
 let usuariosManager = new UsuariosManager();
 
 router.post("/registro", async (req, res) => {
-  let { user, email, password } = req.body;
-  if (!user || !email || !password) {
+  let { user, email, password, rol } = req.body;
+  if (!user || !email || !password || !rol) {
     res.setHeader("Content-Type", "application/json");
     return res.status(400).json({ error: `Ingrese Los Datos` });
   }
@@ -21,11 +21,14 @@ router.post("/registro", async (req, res) => {
   password = generateHash(password);
 
   try {
-    let nuevoUsuario = await usuariosManager.create({ user, email, password });
+    let nuevoUsuario = await usuariosManager.create({
+      user,
+      email,
+      password,
+      rol,
+    });
     res.setHeader("Content-Type", "application/json");
-    return res
-      .status(200)
-      .json({ message: "Usuario Registrado!", usuario: nuevoUsuario });
+    return res.status(200).redirect(`/login`);
   } catch (error) {
     // Handle error appropriately
     console.error(error);

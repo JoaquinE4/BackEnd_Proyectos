@@ -1,31 +1,40 @@
-<div class="header container-fluid "  >
+<div class="header container-fluid ">
   <div class="row d-flex p-xl-4 justify-content-between  align-items-center">
 
-  <div class="col-md-4 d-flex   ">
-    <h2  >Tienda</h2>
-  </div>
+    <div class="col-md-4 d-flex   ">
+      <h2>Tienda</h2>
+    </div>
 
-   <div class="col-md-3 d-flex gap-4 justify-content-end">
-              <a    href="/" class="btn btna">Home</a>
-              <a   href="/chat" class="btn btna">Chat</a>
-              <a   href="/carts" class="btn btna  ">Carrito</a>
-              {{>menu}}
-          </div>
-      </div>
+    <div class="col-md-3 d-flex gap-4 justify-content-end">
+      <a href="/" class="btn btna">Home</a>
+      <a href="/chat" class="btn btna">Chat</a>
+      <a href="/carts" class="btn btna  ">Carrito</a>
+      {{>menu}}
+    </div>
   </div>
+</div>
+
+<div class=" d-flex gap-4 justify-content-start  align-items-center  align-content-center mx-5  ">
+  <h3>Bienvenido usuario:</h3>
+
+  <p class="text-white pt-3">Nombre: <strong>{{usuario.user}}</strong></p>
+  <p class="text-white pt-3 ">Email :<strong>{{usuario.email}}</strong></p>
+
+  <p class="text-white pt-3 ">Rol :<strong>{{usuario.rol}}</strong></p>
+</div>
 
 <div class="d-flex justify-content-center align-content-center gap-3 p-5">
 
   {{#if hasPrevPage}}
 
-    <a href="/products?pagina={{prevPage}}" class="btn btna">Pag.Ant.</a>
+  <a href="/products?pagina={{prevPage}}" class="btn btna">Pag.Ant.</a>
 
   {{/if}}
   <a href="/products?pagina=1" class="btn btna">Pag.1</a>
 
   {{#if hasNextPage}}
 
-    <a href="/products?pagina={{nextPage}}" class="btn btna">Pag. Sig.</a>
+  <a href="/products?pagina={{nextPage}}" class="btn btna">Pag. Sig.</a>
 
   {{/if}}
   <a href="/products?pagina={{totalPages}}" class="btn btna">Ult. Pag.</a>
@@ -34,20 +43,20 @@
 
 <div id="list-group" class="d-grid">
   <div class="row gap-5 justify-content-center pt-5">
-      <input type="text" value="{{carrito._id}}" id="carrito" hidden>
+    <input type="text" value="{{carrito._id}}" id="carrito" hidden>
     {{#each productos}}
-      <div class="col-sm-3"  data-aos="zoom-out">
+    <div class="col-sm-3" data-aos="zoom-out">
 
-        <div class="card">
-          <div class="card-body">
-            <h5 class="card-title"> {{title}}</h5>
-            <p class="card-text">Descripcion: {{description}}</p>
-            <p class="card-text">Precio: {{price}}</p>
-            <button class="btn btna" onclick="comprar('{{_id}}')">Agregar
-              a carrito</button>
-          </div>
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title"> {{title}}</h5>
+          <p class="card-text">Descripcion: {{description}}</p>
+          <p class="card-text">Precio: {{price}}</p>
+          <button class="btn btna" onclick="comprar('{{_id}}')">Agregar
+            a carrito</button>
         </div>
       </div>
+    </div>
 
     {{/each}}
 
@@ -60,14 +69,14 @@
 
   {{#if hasPrevPage}}
 
-    <a href="/products?pagina={{prevPage}}" class="btn btna">Pag.Ant.</a>
+  <a href="/products?pagina={{prevPage}}" class="btn btna">Pag.Ant.</a>
 
   {{/if}}
   <a href="/products?pagina=1" class="btn btna">Pag.1</a>
 
   {{#if hasNextPage}}
 
-    <a href="/products?pagina={{nextPage}}" class="btn btna">Pag. Sig.</a>
+  <a href="/products?pagina={{nextPage}}" class="btn btna">Pag. Sig.</a>
 
   {{/if}}
   <a href="/products?pagina={{totalPages}}" class="btn btna">Ult. Pag.</a>

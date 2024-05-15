@@ -1,27 +1,28 @@
-<div class="header container-fluid "  >
+<div class="header container-fluid ">
   <div class="row d-flex p-xl-4 justify-content-between  align-items-center">
 
-  <div class="col-md-4 d-flex   ">
-    <h2  >Sing Up</h2>
+    <div class="col-md-4 d-flex   ">
+      <h2>Sing Up</h2>
+    </div>
+
+
+
+    <div class="col-md-4 d-flex gap-3 align-items-center align-content-center justify-content-end   ">
+      <a href="/" class="btn btna">Home</a>
+
+      {{>menu}}
+
+    </div>
+
   </div>
-
-    
-  
-  <div class="col-md-4 d-flex gap-3 align-items-center align-content-center justify-content-end   ">
-          <a   href="/" class="btn btna">Home</a>
-
-    {{>menu}}
-
-  </div>
- 
 </div>
-  </div>
 
-  
-<div class="formsDiv"  data-aos="zoom-out">
-  <h3  >Sign up</h3>
-  <form    class="d-flex flex-column align-content-center align-items-center justify-content-center" id="loginForm" action="/api/sessions/login" method="post">
-     
+
+<div class="formsDiv" data-aos="zoom-out">
+  <h3>Sign up</h3>
+  <form class="d-flex flex-column align-content-center align-items-center justify-content-center" id="loginForm"
+    action="/api/sessions/login" method="post">
+
     <input type="email" name="email" placeholder="Ingrese correo electrónico">
     <input type="password" name="password" placeholder="Ingrese contraseña">
     <input type="text" name="web" value="web" hidden>
@@ -30,5 +31,3 @@
     </div>
   </form>
 </div>
-
-   

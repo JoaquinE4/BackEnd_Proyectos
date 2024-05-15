@@ -9,5 +9,6 @@ export const usuarioModelo = mongoose.model(
       unique: true,
     },
     password: String,
+    rol: String,
   })
 );

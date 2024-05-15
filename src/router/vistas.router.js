@@ -2,15 +2,13 @@ import { Router } from "express";
 import ProductManager from "../dao/ProductManagerMongo.js";
 import { CartManager } from "../dao/CartManagerMongo.js";
 import __dirname from "../utils.js";
-import { isValidObjectId } from "mongoose";
-import { usuarioModelo } from "../dao/models/usuario.model.js";
 import { auth } from "../middleware/auth.js";
 
 const productManager = new ProductManager();
 const cartManager = new CartManager();
 export const router = Router();
 
-router.get("/", async (req, res) => {
+router.get("/", auth, async (req, res) => {
   let { pagina } = req.query;
 
   if (!pagina) {
@@ -100,6 +98,7 @@ router.get("/products", auth, async (req, res) => {
       prevPage,
       nextPage,
       carrito,
+      usuario: req.session.user,
     });
   } catch (error) {
     console.log(error);

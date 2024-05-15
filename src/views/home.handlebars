@@ -1,36 +1,36 @@
-<div class="header container-fluid " >
+<div class="header container-fluid ">
   <div class="row d-flex p-xl-4 justify-content-between  align-items-center">
 
-  <div class="col-md-4 d-flex   ">
-    <h2    style="color: white;">Bienvenido al desafio</h2>
-  </div>
+    <div class="col-md-4 d-flex   ">
+      <h2 style="color: white;">Bienvenido al desafio</h2>
+    </div>
 
-    
-  
-  <div class="col-md-4 d-flex gap-3 align-items-center align-content-center justify-content-end  ">
-    <a  href="/realtimeproducts" class="btn btna ">Real time</a>
-    <a   href="/products" class="btn  btna ">Tienda</a>
-    <a   href="/carts" class="btn btna  ">Carrito</a>
-    {{>menu}}
+
+
+    <div class="col-md-4 d-flex gap-3 align-items-center align-content-center justify-content-end  ">
+      <a href="/realtimeproducts" class="btn btna ">Real time</a>
+      <a href="/products" class="btn  btna ">Tienda</a>
+      <a href="/carts" class="btn btna  ">Carrito</a>
+      {{>menu}}
+
+    </div>
 
   </div>
- 
 </div>
-  </div>
 
- 
- <div class="d-flex justify-content-center align-content-center gap-3 p-5">
+
+<div class="d-flex justify-content-center align-content-center gap-3 p-5">
 
   {{#if hasPrevPage}}
 
-    <a href="/?pagina={{prevPage}}" class="btn btna">Pag.Ant.</a>
+  <a href="/?pagina={{prevPage}}" class="btn btna">Pag.Ant.</a>
 
   {{/if}}
   <a href="/?pagina=1" class="btn btna">Pag.1</a>
 
   {{#if hasNextPage}}
 
-    <a href="/?pagina={{nextPage}}" class="btn btna">Pag. Sig.</a>
+  <a href="/?pagina={{nextPage}}" class="btn btna">Pag. Sig.</a>
 
   {{/if}}
   <a href="/?pagina={{totalPages}}" class="btn btna">Ult. Pag.</a>
@@ -40,16 +40,16 @@
   <div class="row gap-5 justify-content-center pt-5">
 
     {{#each productos}}
-      <div class="col-sm-3 s"  data-aos="zoom-out">
+    <div class="col-sm-3 s" data-aos="zoom-out">
 
-        <div class="card">
-          <div class="card-body">
-            <h5 class="card-title"> {{title}}</h5>
-            <p class="card-text">Descripcion: {{description}}</p>
-            <p class="card-text">Precio: {{price}}</p>
-          </div>
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title"> {{title}}</h5>
+          <p class="card-text">Descripcion: {{description}}</p>
+          <p class="card-text">Precio: {{price}}</p>
         </div>
       </div>
+    </div>
 
     {{/each}}
 
@@ -61,14 +61,14 @@
 
   {{#if hasPrevPage}}
 
-    <a href="/?pagina={{prevPage}}" class="btn btna">Pag.Ant.</a>
+  <a href="/?pagina={{prevPage}}" class="btn btna">Pag.Ant.</a>
 
   {{/if}}
   <a href="/?pagina=1" class="btn btna">Pag.1</a>
 
   {{#if hasNextPage}}
 
-    <a href="/?pagina={{nextPage}}" class="btn btna">Pag. Sig.</a>
+  <a href="/?pagina={{nextPage}}" class="btn btna">Pag. Sig.</a>
 
   {{/if}}
   <a href="/?pagina={{totalPages}}" class="btn btna">Ult. Pag.</a>

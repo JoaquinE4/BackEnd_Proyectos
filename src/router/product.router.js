@@ -92,12 +92,10 @@ router.post("/", async (req, res) => {
     });
 
     res.setHeader("Content-Type", "application/json");
-    res
-      .status(201)
-      .json({
-        message: "Producto agregado correctamente",
-        product: newProduct,
-      });
+    res.status(201).json({
+      message: "Producto agregado correctamente",
+      product: newProduct,
+    });
   } catch (error) {
     res.setHeader("Content-Type", "application/json");
     res.status(500).json({ error: "Hubo un error al procesar la solicitud" });
@@ -121,12 +119,10 @@ router.put("/:pid", async (req, res) => {
     );
 
     res.setHeader("Content-Type", "application/json");
-    return res
-      .status(200)
-      .json({
-        message: "Producto actualizado correctamente",
-        product: updatedProduct,
-      });
+    return res.status(200).json({
+      message: "Producto actualizado correctamente",
+      product: updatedProduct,
+    });
   } catch (error) {
     res.setHeader("Content-Type", "application/json");
     return res.status(500).json({ error: "No fue posible" });
