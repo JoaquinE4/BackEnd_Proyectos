@@ -1,13 +1,25 @@
 import { Router } from "express";
 import { UsuariosManagerMongo as UsuariosManager } from "../dao/UsuariosManagerMongo.js";
-import { generateHash } from "../utils.js";
+import {  validaPassword } from "../utils.js";
+import passport from "passport";
 
 export const router = Router();
 let usuariosManager = new UsuariosManager();
 
-router.post("/registro", async (req, res) => {
-  let { user, email, password, rol } = req.body;
-  if (!user || !email || !password || !rol) {
+router.get("/error", (req,res)=>{
+  res.setHeader('Content-Type','application/json');
+  return res.status(500).json(
+    {
+      
+      detalle:`Fallo al autenticar`
+    }
+  )
+  
+})
+
+router.post("/registro", passport.authenticate("registro", {failureRedirect:"/error"}) , async (req, res) => {
+  /* let { user, email, password  } = req.body;
+  if (!user || !email || !password  ) {
     res.setHeader("Content-Type", "application/json");
     return res.status(400).json({ error: `Ingrese Los Datos` });
   }
@@ -19,7 +31,7 @@ router.post("/registro", async (req, res) => {
   }
 
   password = generateHash(password);
-
+  let rol = "usuario"
   try {
     let nuevoUsuario = await usuariosManager.create({
       user,
@@ -33,13 +45,16 @@ router.post("/registro", async (req, res) => {
     // Handle error appropriately
     console.error(error);
     return res.status(500).json({ error: "Internal Server Error" });
-  }
+  } */
+
+  res.setHeader('Content-Type','application/json');
+  return res.status(201).json({menssage:"reistro ok", nueUsuario: req.user});
 });
 
-router.post("/login", async (req, res) => {
-  let { email, password, web } = req.body;
+router.post("/login",passport.authenticate("login", {failureRedirect:"/error"}) , async (req, res) => {
+  let { web } = req.body;
 
-  if (!email || !password) {
+/*   if (!email || !password) {
     if (web) {
       return res.redirect(`/login?error=Datos%20inexistentes`);
     } else {
@@ -47,15 +62,9 @@ router.post("/login", async (req, res) => {
       return res.status(400).json({ error: `crde` });
     }
   }
-
-  // otras validaciones
-  // preguntar por adminCoder@coder.com, y la contraseña adminCod3r123
-  // si son esos datos, devolves al usuario nombre "admin", email
-  // adminCoder@coder.com y rol "admin"
-
-  let usuario = await usuariosManager.getBy({
-    email,
-    password: generateHash(password),
+  */
+ /*  let usuario = await usuariosManager.getBy({
+    email
   });
   if (!usuario) {
     if (web) {
@@ -66,7 +75,12 @@ router.post("/login", async (req, res) => {
     }
   }
 
-  usuario = { ...usuario };
+  if(!validaPassword(password, usuario.password)){
+    res.setHeader("Content-Type", "application/json");
+    return res.status(400).json({ error: `crde` });
+  }
+ */
+ let usuario = { ...req.user };
   delete usuario.password;
   console.log(usuario);
 

@@ -12,6 +12,9 @@ import { MessageModel as mensajesModelo } from "./dao/models/Modelos.js";
 import cookieParser from "cookie-parser";
 import session from "express-session"; // Cambiado de 'sessions' a 'session'
 import { auth } from "./middleware/auth.js";
+import MongoStore from "connect-mongo";
+import passport from "passport";
+import { initPasport } from "./config/passport.config.js";
 
 const PORT = 8080;
 const app = express();
@@ -26,8 +29,17 @@ app.use(
     secret: "code24",
     resave: true,
     saveUninitialized: true,
+    store: MongoStore.create({
+      ttl:3600,
+      mongoUrl:"mongodb+srv://jbackend0:CoderCoder2024@clustercoder.bhdint3.mongodb.net/?retryWrites=true&w=majority&appName=ClusterCoder&dbName=BackEnd",
+      
+    })
   })
 );
+
+initPasport();
+app.use (passport.initialize())
+app.use(passport.session())
 
 app.engine("handlebars", engine());
 app.set("view engine", "handlebars");
@@ -38,50 +50,6 @@ app.use("/api/productos", productosRouter);
 app.use("/api/carts", cartsRouter);
 app.use("/", vistasRouter);
 
-/* app.get('/login', (req, res) => {
-   let { usuario, password } = req.query
-   if (!usuario || !password) {
-      res.setHeader('Content-Type', 'application/json');
-      return res.status(400).json({ error: `Complete Los datos` })
-   }
-
-   if (usuario != "auro" || password != "coder24") {
-
-      res.setHeader('Content-Type', 'application/json');
-      return res.status(400).json({ error: `Credenciales Incorrectas` })
-   }
-   req.session.usuario = usuario
-   res.setHeader('Content-Type', 'application/json');
-   res.status(200).json({
-      Message: "Se a inciado la secion!", usuario
-
-   });
-})
-
-app.get('/logout', (req, res) => {
-
-   req.session.destroy(error => {
-      if (error) {
-         res.setHeader('Content-Type', 'application/json');
-         return res.status(500).json(
-            {
-               error: `Error inesperado en el servidor - Intente más tarde, o contacte a su administrador`,
-               detalle: `${error.message}`
-            }
-         )
-
-      }
-   }
-   )
-
-
-   res.setHeader('Content-Type', 'application/json');
-   res.status(200).json({
-      message: `Session Out`
-   });
-});
-
- */
 app.get("/contador", (req, res) => {
   if (req.session.contador) {
     req.session.contador++;
