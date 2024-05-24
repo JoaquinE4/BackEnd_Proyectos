@@ -71,13 +71,15 @@ router.get("/products", auth, async (req, res) => {
   if (!pagina) {
     pagina = 1;
   }
-  let id = "663a8ea0f5b465f38ecc3ed2";
+  console.log(req.session.user.cart);
+  let id = req.session.user.cart;
   let carrito = await cartManager.getCartByIdPopulate({ _id: id });
+  console.log({ carrito });
 
   if (!carrito) {
     return res
       .status(404)
-      .json({ error: `No se encontró ningún carrito con el ID ${cid}` });
+      .json({ error: `No se encontró ningún carrito con el ID ${id}` });
   }
 
   try {
@@ -111,7 +113,7 @@ router.get("/products", auth, async (req, res) => {
 });
 
 router.get("/carts", auth, async (req, res) => {
-  let id = "663a8ea0f5b465f38ecc3ed2";
+  let id = req.session.user.cart;
   let carrito = await cartManager.getCartByIdPopulate({ _id: id });
 
   if (!carrito) {

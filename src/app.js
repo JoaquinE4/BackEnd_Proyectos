@@ -30,16 +30,16 @@ app.use(
     resave: true,
     saveUninitialized: true,
     store: MongoStore.create({
-      ttl:3600,
-      mongoUrl:"mongodb+srv://jbackend0:CoderCoder2024@clustercoder.bhdint3.mongodb.net/?retryWrites=true&w=majority&appName=ClusterCoder&dbName=BackEnd",
-      
-    })
+      ttl: 3600,
+      mongoUrl:
+        "mongodb+srv://jbackend0:CoderCoder2024@clustercoder.bhdint3.mongodb.net/?retryWrites=true&w=majority&appName=ClusterCoder&dbName=BackEnd",
+    }),
   })
 );
 
 initPasport();
-app.use (passport.initialize())
-app.use(passport.session())
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.engine("handlebars", engine());
 app.set("view engine", "handlebars");

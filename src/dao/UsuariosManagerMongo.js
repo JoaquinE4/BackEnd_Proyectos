@@ -8,4 +8,7 @@ export class UsuariosManagerMongo {
   async getBy(filtro = {}) {
     return await usuarioModelo.findOne(filtro).lean();
   }
+  async getByPopulate(filtro = {}) {
+    return await usuarioModelo.findOne(filtro).populate("cart").lean();
+  }
 }
