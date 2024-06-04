@@ -1,6 +1,7 @@
 import { Router } from "express";
 import { UsuariosManagerMongo as UsuariosManager } from "../dao/UsuariosManagerMongo.js";
 import passport from "passport";
+import { passportCall } from "../utils.js";
 
 export const router = Router();
 let usuariosManager = new UsuariosManager();
@@ -14,7 +15,7 @@ router.get("/error", (req, res) => {
 
 router.post(
   "/registro",
-  passport.authenticate("registro", { failureRedirect: "/api/sessions/error" }),
+  passportCall("registro"),
   async (req, res) => {
     res.setHeader("Content-Type", "application/json");
     return res.status(201).redirect("/products");
@@ -23,14 +24,13 @@ router.post(
 
 router.post(
   "/login",
-  passport.authenticate("login", { failureRedirect: "/error" }),
+  passportCall("login"),
   async (req, res) => {
     let { web } = req.body;
 
-    let usuario = { ...req.user };
+    let usuario = { ...req.session.user };
     delete usuario.password;
-    console.log(usuario);
-
+ 
     req.session.user = usuario;
 
     if (web) {
@@ -45,12 +45,11 @@ router.post(
 router.get("/github", passport.authenticate("github", {}), (req, res) => {});
 router.get(
   "/callbackGithub",
-  passport.authenticate("github", { failureRedirect: "/api/sessions/error" }),
+  passportCall("github"),
   (req, res) => {
     console.log("QUERY PARAMS:", req.query);
     req.session.user = req.user;
-    console.log(req.user);
-
+ 
     res.setHeader("Content-Type", "application/json");
     return res.status(200).redirect("/");
   }

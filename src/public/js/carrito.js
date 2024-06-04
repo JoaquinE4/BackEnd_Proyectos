@@ -62,18 +62,19 @@ const toggleTableVisibility = () => {
   const tbody = document
     .getElementById("table")
     .getElementsByTagName("tbody")[0];
-  const table = document.getElementById("table"); // Asegúrate de tener una referencia a la tabla
-  const tienda = document.getElementById("tienda"); // Asegúrate de tener una referencia a la tabla
+  const table = document.getElementById("table");  
+  const tienda = document.getElementById("tienda");  
+  const btnEliminar = document.getElementById("btnEliminar");  
 
   // Verificar si hay filas en el cuerpo de la tabla
   if (tbody && tbody.getElementsByTagName("tr").length === 0) {
-    // Si la tabla está vacía, cambiar la clase a 'd-none'
+    btnEliminar.classList.add("d-none");
     table.classList.add("d-none");
     tienda.classList.remove("d-none");
   } else {
-    // Si la tabla tiene elementos, asegurarse de que la clase 'd-none' esté eliminada
     tienda.classList.add("d-none");
     table.classList.remove("d-none");
+    btnEliminar.classList.remove("d-none");
   }
 };
 

@@ -4,7 +4,9 @@ export const usuarioModelo = mongoose.model(
   "usuarios",
   new mongoose.Schema(
     {
-      user: String,
+      first_name: String,
+      last_name:String,
+      age:Number,
       email: {
         type: String,
         unique: true,

@@ -18,12 +18,12 @@
 <div>
   <input type="text" value="{{carrito._id}}" id="carrito" hidden />
 
-  <div class="container p-5 d-flex flex-column justify-content-center align-items-end px-5 align-content-center"
-    id="tabla" style="display: block;">
-    <div class="w-auto h-auto" id="tienda">
+  <div class="container p-5 d-flex flex-column justify-content-center align-items-center px-5 align-content-center"
+    id="tabla" style="display: block;  ">
+    <div class="w-auto h-auto border rounded p-5 mb-2  " id="tienda">
       <h3>Su Carrito está vacío</h3>
-      <p>Vuelva a la tienda</p>
-      <a href="/products" class="btn w-auto btna">Tienda</a>
+      <p class="text-center text-white">Vuelva a la tienda</p>
+      <a href="/products" class="btn w-auto  btna">Tienda</a>
     </div>
 
     <table class="table tables text-white" id="table">
@@ -48,7 +48,7 @@
         {{/each}}
       </tbody>
     </table>
-    <button class="btna btn mx-lg-5" onclick="eliminarTodo()">Eliminar todo</button>
+    <button class="btna btn mx-lg-5" id="btnEliminar" onclick="eliminarTodo()">Eliminar todo</button>
   </div>
 </div>
 

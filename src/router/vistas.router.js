@@ -74,8 +74,7 @@ router.get("/products", auth, async (req, res) => {
   console.log(req.session.user.cart);
   let id = req.session.user.cart;
   let carrito = await cartManager.getCartByIdPopulate({ _id: id });
-  console.log({ carrito });
-
+ 
   if (!carrito) {
     return res
       .status(404)
@@ -103,8 +102,7 @@ router.get("/products", auth, async (req, res) => {
       usuario: req.session.user,
     });
   } catch (error) {
-    console.log(error);
-    res.setHeader("Content-Type", "application/json");
+     res.setHeader("Content-Type", "application/json");
     return res.status(500).json({
       error: `Error inesperado en el servidor - Intente más tarde, o contacte a su administrador`,
       detalle: `${error.message}`,

@@ -17,8 +17,13 @@ export const initPasport = () => {
       },
       async (req, username, password, done) => {
         try {
-          let { user } = req.body;
-          if (!user) {
+          let { first_name , last_name, age } = req.body;
+          if (!first_name || !last_name ) {
+            return done(null, false);
+          }
+
+          age=Number(age)
+          if(isNaN(age)){
             return done(null, false);
           }
 
@@ -28,12 +33,14 @@ export const initPasport = () => {
           }
 
           password = generateHash(password);
-          let rol = "usuario";
+          let rol = "user";
           const id = Date.now().toString();
           let newCart = await cartManager.addCart({ id });
 
           let nuevoUsuario = await usuariosManager.create({
-            user,
+            first_name,
+            last_name,
+            age,
             email: username,
             password,
             rol,
