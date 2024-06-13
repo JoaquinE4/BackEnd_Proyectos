@@ -10,13 +10,13 @@ import { Server } from "socket.io";
 import mongoose from "mongoose";
 import { MessageModel as mensajesModelo } from "./dao/models/Modelos.js";
 import cookieParser from "cookie-parser";
-import session from "express-session"; // Cambiado de 'sessions' a 'session'
-import { auth } from "./middleware/auth.js";
+import session from "express-session";
 import MongoStore from "connect-mongo";
 import passport from "passport";
 import { initPasport } from "./config/passport.config.js";
+import { config } from "./config/congif.js";
 
-const PORT = 8080;
+const PORT = config.PORT;
 const app = express();
 
 app.use(express.json());
@@ -26,13 +26,12 @@ app.use(cookieParser("segurida"));
 
 app.use(
   session({
-    secret: "code24",
+    secret: config.SECRET,
     resave: true,
     saveUninitialized: true,
     store: MongoStore.create({
       ttl: 3600,
-      mongoUrl:
-        "mongodb+srv://jbackend0:CoderCoder2024@clustercoder.bhdint3.mongodb.net/?retryWrites=true&w=majority&appName=ClusterCoder&dbName=BackEnd",
+      mongoUrl: config.MONGO_URL_DB,
     }),
   })
 );
@@ -49,48 +48,6 @@ app.use("/api/sessions", sessionsRouter);
 app.use("/api/productos", productosRouter);
 app.use("/api/carts", cartsRouter);
 app.use("/", vistasRouter);
-
-app.get("/contador", (req, res) => {
-  if (req.session.contador) {
-    req.session.contador++;
-  } else {
-    req.session.contador = 1;
-  }
-
-  res.setHeader("Content-Type", "application/json");
-  res.status(200).send(`Visitas: ${req.session.contador}`);
-});
-
-app.get("/setcookies", (req, res) => {
-  let datos = { nombre: "Aurora", apellido: "Cassarotti", rol: "user" };
-  res.cookie("pruebaCokie", "calor: cookie1", {});
-  res.cookie("datosCokie", datos, {});
-  res.cookie("datosCokieMax", datos, { maxAge: 3000 });
-  res.cookie("datosCokieExp", datos, { expires: new Date(2024, 4, 16) });
-  res.cookie("datosCokieExpFirmada", datos, {
-    signed: true,
-    expires: new Date(2024, 4, 16),
-  });
-  res.setHeader("Content-Type", "application/json");
-  res.status(200).send("hola");
-});
-
-app.get("/getcookies", auth, (req, res) => {
-  let cookies = req.cookies;
-  let cookiesFirmadas = req.signedCookies;
-  res.setHeader("Content-Type", "application/json");
-  res.status(200).json({
-    cookies,
-    cookiesFirmadas,
-  });
-});
-
-app.get("/delcookies", (req, res) => {
-  //  res.clearCookie("pruebaCokie")
-  Object.keys(req.cookies).forEach((c) => res.clearCookie(c));
-  res.setHeader("Content-Type", "application/json");
-  res.status(200).json({});
-});
 
 let usuarios = [];
 
@@ -121,13 +78,13 @@ io.on("connection", async (socket) => {
 
 const conecDB = async () => {
   try {
-    await mongoose.connect(
-      "mongodb+srv://jbackend0:CoderCoder2024@clustercoder.bhdint3.mongodb.net/?retryWrites=true&w=majority&appName=ClusterCoder",
-      {
-        dbName: "BackEnd",
-      }
-    );
+    await mongoose.connect(config.MONGO_URL, {
+      dbName: config.DB_NAME,
+    });
     console.log("DB CONECTADA");
-  } catch {}
+  } catch {
+    console.log("ERROR AL CONECTAR DB");
+
+  }
 };
 conecDB();

@@ -1,6 +1,6 @@
 import { ProductosModels } from "./models/Modelos.js";
 
-export default class ProductManager {
+export   class ProductManagerMongo {
   async addProduct(producto) {
     return await ProductosModels.create(producto);
   }

@@ -1,9 +1,9 @@
 import { cartModel } from "./models/Modelos.js";
-import ProductManager from "./ProductManagerMongo.js";
+import {ProductManagerMongo as ProductManager} from "./ProductManagerMongo.js";
 
 const productManager = new ProductManager();
 
-export class CartManager {
+export class CartManagerMongo {
   async getAll() {
     return cartModel.find().lean();
   }

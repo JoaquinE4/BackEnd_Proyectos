@@ -3,11 +3,10 @@ import local from "passport-local";
 import github from "passport-github2";
 import { UsuariosManagerMongo } from "../dao/UsuariosManagerMongo.js";
 import { generateHash, validaPassword } from "../utils.js";
-import { CartManager } from "../dao/CartManagerMongo.js";
+ import { cartsService } from "../service/Carts.service.js";
 
 const usuariosManager = new UsuariosManagerMongo();
-const cartManager = new CartManager();
-export const initPasport = () => {
+ export const initPasport = () => {
   passport.use(
     "registro",
     new local.Strategy(
@@ -35,7 +34,7 @@ export const initPasport = () => {
           password = generateHash(password);
           let rol = "user";
           const id = Date.now().toString();
-          let newCart = await cartManager.addCart({ id });
+          let newCart = await cartsService.addCart({ id });
 
           let nuevoUsuario = await usuariosManager.create({
             first_name,
@@ -105,7 +104,7 @@ export const initPasport = () => {
           let usuario = await usuariosManager.getBy({ email });
 
           if (!usuario) {
-            let newCart = await cartManager.addCart({ id });
+            let newCart = await cartsService.addCart({ id });
             let rol = "usuario";
 
             usuario = await usuariosManager.create({
