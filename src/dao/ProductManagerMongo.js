@@ -1,6 +1,6 @@
 import { ProductosModels } from "./models/Modelos.js";
 
-export   class ProductManagerMongo {
+export class ProductManagerMongo {
   async addProduct(producto) {
     return await ProductosModels.create(producto);
   }
@@ -14,7 +14,7 @@ export   class ProductManagerMongo {
   }
 
   async getProductByCode(filtro) {
-    return await ProductosModels.findOne(filtro);
+    return await ProductosModels.findOne(filtro).lean();
   }
 
   async updateProduct(id, updatedFields) {

@@ -1,5 +1,5 @@
 import { cartModel } from "./models/Modelos.js";
-import {ProductManagerMongo as ProductManager} from "./ProductManagerMongo.js";
+import { ProductManagerMongo as ProductManager } from "./ProductManagerMongo.js";
 
 const productManager = new ProductManager();
 
@@ -24,6 +24,9 @@ export class CartManagerMongo {
   }
 
   async deleteCart(id) {
-    return await cartModel.updateOne({ _id: id }, { $set: { products: [] } });
+    return await cartModel.updateOne(
+      { _id: id },
+      { $set: { products: [], total: 0 } }
+    );
   }
 }

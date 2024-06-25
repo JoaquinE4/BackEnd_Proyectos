@@ -11,7 +11,6 @@ socket.on("nuevaConexion", (data) => {
 const list = document.getElementById("list-group");
 
 socket.on("nuevoProducto", (newProduct) => {
-  console.log(newProduct);
   list.innerHTML += ` 
     <div class="col-sm-3" data-aos="fade-up">
     <div class="card">
@@ -25,7 +24,6 @@ socket.on("nuevoProducto", (newProduct) => {
 });
 
 socket.on("delete", (productos) => {
-  console.log(productos);
   list.innerHTML = "";
   productos.map((p) => {
     list.innerHTML += `

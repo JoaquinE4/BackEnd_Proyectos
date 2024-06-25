@@ -11,4 +11,12 @@ export class UsuariosManagerMongo {
   async getByPopulate(filtro = {}) {
     return await usuarioModelo.findOne(filtro).populate("cart").lean();
   }
+
+  async update(id, ticket) {
+    return await usuarioModelo.findOneAndUpdate(
+      { _id: id },
+      { $push: { ticket } },
+      { new: true }
+    );
+  }
 }

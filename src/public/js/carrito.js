@@ -1,21 +1,15 @@
-console.log("Hola!");
-
 const eliminar = async (pid) => {
   const inputCart = document.getElementById("carrito");
   const cid = inputCart.value;
-  console.log(pid, cid);
   if (cid && pid) {
     const url = `/api/carts/${cid}/product/${pid}`;
-    console.log(url);
     try {
       const respuesta = await fetch(url, {
         method: "DELETE",
       });
 
-      console.log(`Código de producto ${pid} agregado al carrito ${cid}`);
       if (respuesta.status === 200) {
         let datos = await respuesta.json();
-        console.log(datos);
         alert("¡Producto eliminado!");
         location.replace("http://localhost:8080/carts");
       }
@@ -34,16 +28,13 @@ const eliminarTodo = async () => {
   const cid = inputCart.value;
   if (cid) {
     const url = `/api/carts/${cid}`;
-    console.log(url);
     try {
       const respuesta = await fetch(url, {
         method: "DELETE",
       });
 
-      console.log(` Productos Eliminados del carrito ${cid}`);
       if (respuesta.status === 200) {
         let datos = await respuesta.json();
-        console.log(datos);
         alert("¡Productos eliminados!");
         location.replace("http://localhost:8080/carts");
       }
@@ -57,24 +48,42 @@ const eliminarTodo = async () => {
   }
 };
 
+const finalizarCompra = async () => {
+  const inputCart = document.getElementById("carrito");
+  const cid = inputCart.value;
+
+  if (cid) {
+    const url = `/api/carts/${cid}/purchase`;
+
+    const respuesta = await fetch(url, {
+      method: "GET",
+    });
+
+    location.replace("http://localhost:8080/ticket");
+  }
+};
+
 const toggleTableVisibility = () => {
   // Obtener el cuerpo de la tabla
   const tbody = document
     .getElementById("table")
     .getElementsByTagName("tbody")[0];
-  const table = document.getElementById("table");  
-  const tienda = document.getElementById("tienda");  
-  const btnEliminar = document.getElementById("btnEliminar");  
+  const table = document.getElementById("table");
+  const tienda = document.getElementById("tienda");
+  const btnEliminar = document.getElementById("btnEliminar");
+  const btnFinalizarCompra = document.getElementById("btnFinalizarCompra");
 
   // Verificar si hay filas en el cuerpo de la tabla
   if (tbody && tbody.getElementsByTagName("tr").length === 0) {
     btnEliminar.classList.add("d-none");
+    btnFinalizarCompra.classList.add("d-none");
     table.classList.add("d-none");
     tienda.classList.remove("d-none");
   } else {
     tienda.classList.add("d-none");
     table.classList.remove("d-none");
     btnEliminar.classList.remove("d-none");
+    btnFinalizarCompra.classList.remove("d-none");
   }
 };
 

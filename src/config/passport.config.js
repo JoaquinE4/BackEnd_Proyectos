@@ -3,7 +3,7 @@ import local from "passport-local";
 import github from "passport-github2";
 import { UsuariosManagerMongo } from "../dao/UsuariosManagerMongo.js";
 import { generateHash, validaPassword } from "../utils.js";
- import { cartsService } from "../service/Carts.service.js";
+ import { cartsService } from "../repository/Carts.service.js";
 
 const usuariosManager = new UsuariosManagerMongo();
  export const initPasport = () => {

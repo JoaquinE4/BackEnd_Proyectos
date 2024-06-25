@@ -19,6 +19,7 @@ const productosSchema = new mongoose.Schema(
   },
   {
     timestamps: true,
+    strict: false
   }
 );
 
@@ -44,11 +45,17 @@ const cartSchema = new mongoose.Schema(
         },
       ],
     },
+    total: {
+      type: Number,
+      default: 0
+    }
   },
   {
     timestamps: true,
   }
 );
+
+
 
 export const cartModel = mongoose.model(cartCollection, cartSchema);
 

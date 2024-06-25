@@ -1,0 +1,43 @@
+<div class="header container-fluid">
+  <div class="row d-flex p-xl-4 justify-content-between align-items-center">
+    <div class="col-md-4 d-flex">
+      <h2>Orden de compras</h2>
+    </div>
+
+    <div class="col-md-4 d-flex gap-3 align-items-center align-content-center justify-content-end  ">
+      <a href="/" class="btn btna ">Home</a>
+      <a href="/products" class="btn  btna ">Tienda</a>
+      <a href="/carts" class="btn btna  ">Carrito</a>
+      {{>menu}}
+
+    </div>
+
+  </div>
+</div>
+<div class="d-flex justify-content-center align-items-center ">
+  <div>
+    <div class="container mt-4">
+      <h3 class="mb-4">Detalles del Ticket</h3>
+      <div class="border w-75 bg-white border-dark rounded p-4">
+        <p><strong>Código de ticket:</strong> {{ultimoTicket.code}}</p>
+        <p><strong>Email de comprador:</strong> {{ultimoTicket.purchaser}}</p>
+        <p><strong>Fecha de compra:</strong> {{ultimoTicket.purchase_datetime}}</p>
+        <p><strong>Monto total:</strong> ${{ultimoTicket.amount}}</p>
+      </div>
+    </div>
+
+    <div id="alerta" class="alert w-75   alert-info alert-dismissible fade show mt-4" >
+      <strong>Productos no procesados</strong>
+      <div>
+        <ul id="ulProd">
+        {{#each carrito.products}}
+          <li>{{product.title}}</li>
+        {{/each}}
+        </ul>
+      </div>
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+  </div>
+</div>
+
+<script src="/js/ticket.js" ></script>

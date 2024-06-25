@@ -33,7 +33,7 @@
           <th scope="col">Descripción</th>
           <th scope="col">Precio</th>
           <th scope="col">Cantidad</th>
-          <th scope="col"></th>
+          <th scope="col">Total ${{carrito.total}}</th>
         </tr>
       </thead>
       <tbody>
@@ -49,6 +49,8 @@
       </tbody>
     </table>
     <button class="btna btn mx-lg-5" id="btnEliminar" onclick="eliminarTodo()">Eliminar todo</button>
+    <button class="btna btn mx-lg-5" id="btnFinalizarCompra" onclick="finalizarCompra()">Finalizar compra</button>
+    
   </div>
 </div>
 
