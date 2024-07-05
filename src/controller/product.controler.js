@@ -1,9 +1,12 @@
 import { io } from "../app.js";
-import { authADM } from "../middleware/auth.js";
 import { productosService } from "../repository/Products.service.js";
+import { argumentosProductos } from "../utils/argumentosError.js";
+import { CustomError } from "../utils/CustomError.js";
+import { TIPOS_ERROR } from "../utils/Error.js";
+
 
 export class ProductosControler {
-  static getProduct = async (req, res) => {
+  static getProduct = async (req, res, next) => {
     let { limit, sort, page } = req.query;
     limit = Number(limit);
     if (!limit || limit <= 0) {
@@ -35,16 +38,20 @@ export class ProductosControler {
       res.setHeader("Content-Type", "application/json");
       return res.status(200).json({ productos });
     } catch (error) {
-      res.setHeader("Content-Type", "application/json");
-      return res.status(500).json({ error: "Error inesperado" });
+      next(error);
     }
   };
 
-  static getProductId = async (req, res) => {
+  static getProductId = async (req, res, next) => {
     let id = req.params.pid;
 
     if (!isNaN(id)) {
-      return res.json("Su valor   es  ");
+      CustomError.createError(
+        "Error ID invalido",
+        "Error ID invalido",
+        "Error ID invalido",
+        TIPOS_ERROR.ARGUMENTOS_INVALIDOS
+      );
     }
 
     try {
@@ -52,19 +59,22 @@ export class ProductosControler {
       res.setHeader("Content-Type", "application/json");
       return res.status(200).json({ productId });
     } catch (error) {
-      res.setHeader("Content-Type", "application/json");
-      return res.status(500).json({ error: error.message });
+      next(error);
     }
   };
 
-  static postProduct = async (req, res) => {
+  static postProduct = async (req, res, next) => {
     let newProduct;
     try {
       let { title, description, price, thumbnail, code, stock } = req.body;
 
       if (!title || !description || !price || !thumbnail || !code || !stock) {
-        res.setHeader("Content-Type", "application/json");
-        return res.status(400).json({ error: "Faltan datos" });
+        CustomError.createError(
+          "Error Faltandatos Complete los datos solicitados",
+          argumentosProductos(req.body),
+          "Error Faltandatos Complete los datos solicitados",
+          TIPOS_ERROR.ARGUMENTOS_INVALIDOS
+        );
       }
 
       let existe = await productosService.getProductByCode({ code });
@@ -92,18 +102,22 @@ export class ProductosControler {
         product: newProduct,
       });
     } catch (error) {
-      res.setHeader("Content-Type", "application/json");
-      res.status(500).json({ error: "Hubo un error al procesar la solicitud" });
+      next(error);
     }
     io.emit("nuevoProducto", newProduct);
   };
 
-  static putProduct = async (req, res) => {
+  static putProduct = async (req, res, next) => {
     let id = req.params.pid;
     let updatedFields = req.body;
     id = Number(id);
     if (isNaN(id)) {
-      return res.json("Su valor no es un numero");
+      CustomError.createError(
+        "Error ID invalido",
+        "Error ID invalido",
+        "Error ID invalido",
+        TIPOS_ERROR.ARGUMENTOS_INVALIDOS
+      );
     }
 
     try {
@@ -118,17 +132,21 @@ export class ProductosControler {
         product: updatedProduct,
       });
     } catch (error) {
-      res.setHeader("Content-Type", "application/json");
-      return res.status(500).json({ error: "No fue posible" });
+      next(error);
     }
   };
 
-  static deleteProduct = async (req, res) => {
+  static deleteProduct = async (req, res, next) => {
     let id = req.params.pid;
 
     let productos;
     if (!isNaN(id)) {
-      return res.json("El valor no es ");
+      CustomError.createError(
+        "Error ID invalido",
+        "Error ID invalido",
+        "Error ID invalido",
+        TIPOS_ERROR.ARGUMENTOS_INVALIDOS
+      );
     }
     try {
       let eliminarproducto = await productosService.deleteProduct({ _id: id });
@@ -137,7 +155,7 @@ export class ProductosControler {
 
       io.emit("delete", productos);
     } catch {
-      return res.json({ error: error.message });
+      next(error);
     }
   };
 } //fin controler

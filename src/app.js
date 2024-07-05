@@ -15,6 +15,8 @@ import MongoStore from "connect-mongo";
 import passport from "passport";
 import { initPasport } from "./config/passport.config.js";
 import { config } from "./config/congif.js";
+import { errorHandler } from "./middleware/errorHandler.js";
+import { router as mokingRouter } from "./router/moking.router.js";
 
 const PORT = config.PORT;
 const app = express();
@@ -44,12 +46,13 @@ app.engine("handlebars", engine());
 app.set("view engine", "handlebars");
 app.set("views", path.join(__dirname, "/views"));
 
+app.use("/mockingproducts", mokingRouter)
 app.use("/api/sessions", sessionsRouter);
 app.use("/api/productos", productosRouter);
 app.use("/api/carts", cartsRouter);
 app.use("/", vistasRouter);
-
-let usuarios = [];
+app.use(errorHandler)
+ let usuarios = [];
 
 const server = app.listen(PORT, () =>
   console.log(`Server online en puerto http://localhost:${PORT}/`)

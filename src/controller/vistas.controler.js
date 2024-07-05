@@ -2,6 +2,7 @@ import { UsuariosManagerMongo as UsuarioService } from "../dao/UsuariosManagerMo
 import { cartsService } from "../repository/Carts.service.js";
 import { productosService } from "../repository/Products.service.js";
 import __dirname from "../utils.js";
+import { CustomError } from "../utils/CustomError.js";
 
 const usuarioService = new UsuarioService();
 export class VistasControler {
@@ -98,11 +99,8 @@ export class VistasControler {
         usuario: req.session.user,
       });
     } catch (error) {
-      res.setHeader("Content-Type", "application/json");
-      return res.status(500).json({
-        error: `Error inesperado en el servidor - Intente más tarde, o contacte a su administrador`,
-        detalle: `${error.message}`,
-      });
+      CustomError.createError("Error interno del servidor","Error interno del servidor","Error interno del servidor", TIOPOS_ERROR.INTERNAL_SERVER_ERROR)
+
     }
   };
 
