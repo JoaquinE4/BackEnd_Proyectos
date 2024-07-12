@@ -4,7 +4,6 @@ import { argumentosProductos } from "../utils/argumentosError.js";
 import { CustomError } from "../utils/CustomError.js";
 import { TIPOS_ERROR } from "../utils/Error.js";
 
-
 export class ProductosControler {
   static getProduct = async (req, res, next) => {
     let { limit, sort, page } = req.query;
@@ -35,9 +34,12 @@ export class ProductosControler {
         productos = productos.slice(0, limit);
       }
 
+      req.logger.debug("Exito al buscar todos los productos");
       res.setHeader("Content-Type", "application/json");
       return res.status(200).json({ productos });
     } catch (error) {
+      req.logger.error(error);
+
       next(error);
     }
   };
@@ -56,9 +58,13 @@ export class ProductosControler {
 
     try {
       let productId = await productosService.getProductByCode({ _id: id });
+      req.logger.debug("Exito al buscar producto" + productId);
+
       res.setHeader("Content-Type", "application/json");
       return res.status(200).json({ productId });
     } catch (error) {
+      req.logger.error(error);
+
       next(error);
     }
   };
@@ -95,13 +101,15 @@ export class ProductosControler {
         code,
         stock,
       });
-
+      req.logger.debug("Exito al agregar producto");
       res.setHeader("Content-Type", "application/json");
       res.status(201).json({
         message: "Producto agregado correctamente",
         product: newProduct,
       });
     } catch (error) {
+      req.logger.error(error);
+
       next(error);
     }
     io.emit("nuevoProducto", newProduct);
@@ -125,6 +133,7 @@ export class ProductosControler {
         { id },
         updatedFields
       );
+      req.logger.debug(" Exito al editar producto ");
 
       res.setHeader("Content-Type", "application/json");
       return res.status(200).json({
@@ -132,6 +141,8 @@ export class ProductosControler {
         product: updatedProduct,
       });
     } catch (error) {
+      req.logger.error(error);
+
       next(error);
     }
   };
@@ -150,11 +161,15 @@ export class ProductosControler {
     }
     try {
       let eliminarproducto = await productosService.deleteProduct({ _id: id });
+      req.logger.debug("Exito al eliminar producto");
+
       res.json({ message: "Producto Eliminado" });
       productos = await productManager.getProducts();
 
       io.emit("delete", productos);
     } catch {
+      req.logger.error(error);
+
       next(error);
     }
   };

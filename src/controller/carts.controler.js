@@ -6,6 +6,7 @@ import __dirname from "../utils.js";
 import { isValidObjectId } from "mongoose";
 import { CustomError } from "../utils/CustomError.js";
 import { TIPOS_ERROR } from "../utils/Error.js";
+import { logger } from "../utils/Logger.js";
 
 const usuarioService = new UsuarioManager();
 
@@ -15,8 +16,11 @@ export class CartsControler {
 
     try {
       let newCart = await cartsService.addCart({ id });
+      req.logger.debug("Exito al crear carrito de productos");
+
       res.json(newCart);
     } catch (error) {
+      req.logger.error(error);
       next(error);
     }
   };
@@ -24,9 +28,13 @@ export class CartsControler {
   static getAllCarts = async (req, res, next) => {
     try {
       let tomar = await cartsService.getAll();
+      req.logger.debug("Exito al buscar todos los carritos");
+
       res.setHeader("Content-Type", "application/json");
       return res.status(200).json({ tomar });
     } catch (error) {
+      req.logger.error(error);
+
       next(error);
     }
   };
@@ -55,8 +63,12 @@ export class CartsControler {
         );
       }
 
+      req.logger.debug("Exito albuscar carrito por id");
+
       return res.status(200).json({ carrito });
     } catch (error) {
+      req.logger.error(error);
+
       next(error);
     }
   };
@@ -88,11 +100,14 @@ export class CartsControler {
       let product = [];
 
       let eliminarCart = await cartsService.deleteCart(cid);
+      req.logger.debug("Exito al vaciar carrito");
 
       return res
         .status(200)
         .json({ Message: "Se eliminaron todos los productos" });
     } catch (error) {
+      req.logger.error(error);
+
       next(error);
     }
   };
@@ -114,6 +129,8 @@ export class CartsControler {
       const updatedCart = await cartsService.update(cid, products);
 
       if (updatedCart) {
+        req.logger.debug("Exito al editar carrito");
+
         res.setHeader("Content-Type", "application/json");
         return res
           .status(200)
@@ -125,6 +142,8 @@ export class CartsControler {
           .json({ error: `No se encontró el carrito con el id ${cid}` });
       }
     } catch (error) {
+      req.logger.error(error);
+
       next(error);
     }
   };
@@ -193,10 +212,14 @@ export class CartsControler {
     try {
       let resultado = await cartsService.update(cid, carrito);
       if (resultado.modifiedCount > 0) {
+        req.logger.debug("Exito al agregar producto al carrito");
+
         res.setHeader("Content-Type", "application/json");
         return res.status(200).json({ payload: "Carrito actualizado" });
       }
     } catch (error) {
+      req.logger.error(error);
+
       next(error);
     }
   };
@@ -256,7 +279,7 @@ export class CartsControler {
           total += product.price * item.quantity;
         }
       } catch (error) {
-        console.error("Error fetching product:", error);
+        req.logger.error("Error fetching product:", error);
       }
     }
     total;
@@ -265,10 +288,14 @@ export class CartsControler {
     try {
       let resultado = await cartsService.update(cid, carrito);
       if (resultado.modifiedCount > 0) {
+        req.logger.debug("Exito al acualizar lista de productos del carrito");
+
         res.setHeader("Content-Type", "application/json");
         return res.status(200).json({ payload: "Cantidad actualizada" });
       }
     } catch (error) {
+      req.logger.error(error);
+
       next(error);
     }
   };
@@ -319,7 +346,7 @@ export class CartsControler {
           total += product.price * item.quantity;
         }
       } catch (error) {
-        console.error("Error fetching product:", error);
+        req.logger.error("Error fetching product:", error);
       }
     }
     total;
@@ -327,21 +354,21 @@ export class CartsControler {
     carrito.total = total;
 
     try {
-      
-      
-          let resultado = await cartsService.update(cid, carrito);
-          if (resultado.modifiedCount > 0) {
-            res.setHeader("Content-Type", "application/json");
-            return res.status(200).json({ payload: "Producto eliminado" });
-          }  
+      let resultado = await cartsService.update(cid, carrito);
+      if (resultado.modifiedCount > 0) {
+        req.logger.debug("Exito al eliminar producto del carrito");
+
+        res.setHeader("Content-Type", "application/json");
+        return res.status(200).json({ payload: "Producto eliminado" });
+      }
     } catch (error) {
-      next(error)
+      req.logger.error(error);
+
+      next(error);
     }
-     
-  
   };
 
-  static validarCompra = async (req, res,next) => {
+  static validarCompra = async (req, res, next) => {
     let { cid } = req.params;
 
     let carrito = await cartsService.getCartById({ _id: cid });
@@ -437,19 +464,18 @@ export class CartsControler {
 
       try {
         let updateTicket = await usuarioService.update(id, ticket);
+        req.logger.debug("Exito al crear ticket y agregar al Usuario");
+
         res.setHeader("Content-Type", "application/json");
         return res.status(200).json({ payload: "Usuario actualizado" });
       } catch (error) {
-        CustomError.createError(
-          "Error interno del servidor",
-          "Error interno del servidor",
-          "Error interno del servidor",
-          TIPOS_ERROR.INTERNAL_SERVER_ERROR
-        );
+        req.error(error);
+        next(error);
       }
     } else {
       usuario.tickets.push(ticket);
     }
+    req.logger.debug("Exito al crear ticket y agregar al Usuario");
 
     res.status(200).json({
       message: "Compra validada correctamente",

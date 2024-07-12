@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { auth, authUSER } from "../middleware/auth.js";
+import { auth, authADM, authUSER } from "../middleware/auth.js";
 import { VistasControler } from "../controller/vistas.controler.js";
 
 export const router = Router();
@@ -8,7 +8,7 @@ router.get("/", auth, VistasControler.getInicio);
 
 router.get("/realtimeproducts", VistasControler.getRealTime);
 
-router.get("/chat", authUSER, VistasControler.getChat);
+router.get("/chat",authUSER, VistasControler.getChat);
 
 router.get("/products", auth, VistasControler.getProducts);
 

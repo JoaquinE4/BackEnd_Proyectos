@@ -17,15 +17,17 @@ import { initPasport } from "./config/passport.config.js";
 import { config } from "./config/congif.js";
 import { errorHandler } from "./middleware/errorHandler.js";
 import { router as mokingRouter } from "./router/moking.router.js";
-
+import { router as loggerRouter } from "./router/logger.router.js";
+import {   logger, middLogger } from "./utils/Logger.js";
+ 
 const PORT = config.PORT;
 const app = express();
 
 app.use(express.json());
+app.use(middLogger)
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static("./src/public"));
 app.use(cookieParser("segurida"));
-
 app.use(
   session({
     secret: config.SECRET,
@@ -46,6 +48,7 @@ app.engine("handlebars", engine());
 app.set("view engine", "handlebars");
 app.set("views", path.join(__dirname, "/views"));
 
+app.use("/logger", loggerRouter )
 app.use("/mockingproducts", mokingRouter)
 app.use("/api/sessions", sessionsRouter);
 app.use("/api/productos", productosRouter);
@@ -54,8 +57,9 @@ app.use("/", vistasRouter);
 app.use(errorHandler)
  let usuarios = [];
 
-const server = app.listen(PORT, () =>
-  console.log(`Server online en puerto http://localhost:${PORT}/`)
+const server = app.listen(PORT, () =>{
+    
+  logger.info(`Se ha conectado un cliente con id http://localhost:${PORT}`)  }
 );
 
 export const io = new Server(server);
@@ -84,9 +88,9 @@ const conecDB = async () => {
     await mongoose.connect(config.MONGO_URL, {
       dbName: config.DB_NAME,
     });
-    console.log("DB CONECTADA");
+    logger.info("DB CONECTADA")
   } catch {
-    console.log("ERROR AL CONECTAR DB");
+    logger.error("ERROR AL CONECTAR DB")
 
   }
 };

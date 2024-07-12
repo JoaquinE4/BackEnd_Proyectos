@@ -1,20 +1,21 @@
 {
-  "name": "05-requireexports",
+  "name": "backEnd proyecto",
   "version": "1.0.0",
   "type": "module",
-  "main": "index.js",
+  "main": "src/app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon src/app.js"
+    "dev": "  nodemon src/app.js -m dev",
+    "prod": "  nodemon src/app.js -m prod"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
     "bcrypt": "^5.1.1",
+    "commander": "^12.1.0",
     "connect-mongo": "^5.1.0",
     "cookie-parser": "^1.4.6",
-    "crypto": "^1.0.1",
     "dotenv": "^16.4.5",
     "express": "^4.18.3",
     "express-async-errors": "^3.1.1",
@@ -25,7 +26,8 @@
     "passport": "^0.7.0",
     "passport-github2": "^0.1.12",
     "passport-local": "^1.0.0",
-    "socket.io": "^4.7.5"
+    "socket.io": "^4.7.5",
+    "winston": "^3.13.0"
   },
   "description": "PostMan EndoPoints: https://documenter.getpostman.com/view/34678272/2sA3JM5fsD",
   "devDependencies": {

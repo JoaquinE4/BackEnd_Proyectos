@@ -1,3 +1,10 @@
+@tailwind base;
+
+@tailwind components;
+
+@tailwind utilities; 
+
+
 * {
   padding: 0px;
   margin: 0px;
@@ -162,3 +169,37 @@ form {
 i {
   font-size: 20px;
 }
+
+  
+.hero {
+  background: url('path-to-your-hero-image.jpg') no-repeat center center/cover;
+  color: white;
+  padding: 5rem 0;
+  text-align: center;
+  height: 26.3rem;
+}
+.hero h1 {
+  font-size: 4rem;
+  margin-bottom: 1rem;
+}
+.hero p {
+  font-size: 1.5rem;
+  margin-bottom: 2rem;
+}
+.card-body {
+  background-color: #f8f9fa;
+}
+.card-footer {
+  background-color: #ffffff00;
+}
+.dropdown-menu {
+  background-color: #333;
+  border: none;
+}
+.dropdown-item {
+  color: white;
+}
+.dropdown-item:hover {
+  background-color: #007bff;
+}
+ 

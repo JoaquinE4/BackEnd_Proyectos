@@ -8,7 +8,8 @@ const usuarioService = new UsuarioService();
 export class VistasControler {
   static getInicio = async (req, res) => {
     let { pagina } = req.query;
-
+  
+    
     if (!pagina) {
       pagina = 1;
     }
@@ -60,6 +61,7 @@ export class VistasControler {
   };
 
   static getChat = (req, res) => {
+    
     res.status(200).render("chat");
   };
 
@@ -87,6 +89,7 @@ export class VistasControler {
         prevPage,
         nextPage,
       } = await productosService.getProductsPaginate(pagina);
+ 
       res.setHeader("Content-Type", "text/html");
       res.status(200).render("products", {
         productos,
@@ -99,7 +102,9 @@ export class VistasControler {
         usuario: req.session.user,
       });
     } catch (error) {
-      CustomError.createError("Error interno del servidor","Error interno del servidor","Error interno del servidor", TIOPOS_ERROR.INTERNAL_SERVER_ERROR)
+      req.logger.error(error)
+      next(CustomError.createError("Error interno del servidor","Error interno del servidor","Error interno del servidor", TIOPOS_ERROR.INTERNAL_SERVER_ERROR))
+      
 
     }
   };

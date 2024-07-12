@@ -3,13 +3,17 @@ import { UsuariosManagerMongo as UsuariosManager } from "../dao/UsuariosManagerM
 import passport from "passport";
 import { passportCall } from "../utils.js";
 import { UsuarioDTO } from "../DTO/UsuarioDTO.js";
-
+import { logger } from "../utils/Logger.js";
+ 
 export const router = Router();
 let usuariosManager = new UsuariosManager();
 
 router.get("/error", (req, res) => {
   res.setHeader("Content-Type", "application/json");
+  req.logger.error(error)
+
   return res.status(500).json({
+
     detalle: `Fallo al autenticar`,
   });
 });
@@ -30,6 +34,7 @@ router.post("/login", passportCall("login"), async (req, res) => {
   if (web) {
     return res.status(200).redirect(`/products`);
   } else {
+ 
     res.setHeader("Content-Type", "application/json");
     return res.status(200).redirect("/");
   }
@@ -48,7 +53,9 @@ router.get("/logout", (req, res) => {
   req.session.destroy((e) => {
     if (e) {
       res.setHeader("Content-Type", "application/json");
-      return res.status(500).json({
+      req.logger.error(error)
+
+      return res.status(500).json({    
         error: `Error inesperado en el servidor - Intente más tarde, o contacte a su administrador`,
         detalle: `${error.message}`,
       });
