@@ -1,4 +1,5 @@
 import { io } from "../app.js";
+import { config } from "../config/congif.js";
 import { productosService } from "../repository/Products.service.js";
 import { argumentosProductos } from "../utils/argumentosError.js";
 import { CustomError } from "../utils/CustomError.js";
@@ -71,6 +72,7 @@ export class ProductosControler {
 
   static postProduct = async (req, res, next) => {
     let newProduct;
+    let usuario = req.session.user
     try {
       let { title, description, price, thumbnail, code, stock } = req.body;
 
@@ -90,6 +92,12 @@ export class ProductosControler {
           .status(400)
           .json({ error: "Ya existe un producto con este código" });
       }
+      let owner 
+    if(usuario.rol == "premium"){
+      owner = usuario._id
+    }else{
+      owner = config.ADMIN_ID
+    }
 
       const id = Date.now().toString();
       newProduct = await productosService.addProduct({
@@ -100,6 +108,7 @@ export class ProductosControler {
         thumbnail,
         code,
         stock,
+        owner
       });
       req.logger.debug("Exito al agregar producto");
       res.setHeader("Content-Type", "application/json");
@@ -149,8 +158,12 @@ export class ProductosControler {
 
   static deleteProduct = async (req, res, next) => {
     let id = req.params.pid;
-
-    let productos;
+    let usuario = req.session.user;
+    let productos
+    try {
+      let producto = await productosService.getProductByCode({ _id: id });
+      console.log(producto);
+      
     if (!isNaN(id)) {
       CustomError.createError(
         "Error ID invalido",
@@ -159,15 +172,28 @@ export class ProductosControler {
         TIPOS_ERROR.ARGUMENTOS_INVALIDOS
       );
     }
-    try {
+
+    if(usuario.rol === "admin"){
       let eliminarproducto = await productosService.deleteProduct({ _id: id });
       req.logger.debug("Exito al eliminar producto");
+    }else if(usuario.rol === "premium"){
+
+      if(producto.owner != usuario._id){
+        res.setHeader("Content-Type", "application/json");
+        return res.status(403).json({ error: "No tienes permisos para eliminar este producto" });
+      }
+
+      let eliminarproducto = await productosService.deleteProduct({ _id: id });
+
+    }
+
+ 
 
       res.json({ message: "Producto Eliminado" });
       productos = await productManager.getProducts();
 
       io.emit("delete", productos);
-    } catch {
+    } catch(error){
       req.logger.error(error);
 
       next(error);

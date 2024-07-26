@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import paginate from "mongoose-paginate-v2";
+import { config } from "../../config/congif.js";
 
 const productosCollections = "product";
 
@@ -16,6 +17,11 @@ const productosSchema = new mongoose.Schema(
       required: true,
     },
     stock: Number,
+    owner:{
+      type: mongoose.Types.ObjectId,
+      ref: "usuarios",
+      
+    }
   },
   {
     timestamps: true,

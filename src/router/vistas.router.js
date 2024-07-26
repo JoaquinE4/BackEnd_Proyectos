@@ -21,3 +21,5 @@ router.get("/login", VistasControler.getLogin);
 router.get("/perfil", auth, VistasControler.getPerfil);
 
 router.get("/ticket", VistasControler.getTicket);
+
+router.get("/reset-password/:token", VistasControler.resPassword);

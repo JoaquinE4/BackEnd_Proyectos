@@ -159,4 +159,14 @@ export class VistasControler {
 
     res.status(200).render("ticket", { ultimoTicket, usuario, carrito });
   };
+
+  static resPassword = async (req, res) => {
+
+    const { token } = req.params;
+    console.log(token);
+    res.render('recuperar', { token });
+
+  }
+
+  
 } //fin controler

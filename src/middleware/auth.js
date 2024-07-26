@@ -9,18 +9,17 @@ export const auth = (req, res, next) => {
 
 export const authADM = (req, res, next) => {
 
-  if (req.session.user.rol !== "admin") {
+  if (req.session.user.rol !== "admin" && req.session.user.rol !== "premium") {
     res.setHeader("Content-Type", "application/json");
-    return res.status(401).redirect("/")
+    return res.status(401).redirect("/");
   }
-
   next();
 };
 
 export const authUSER = (req, res, next) => {
   console.log(req.session.user.rol);
   
-  if (req.session.user.rol !== "user") {
+  if (req.session.user.rol !== "user" && req.session.user.rol !== "premium") {
     res.setHeader("Content-Type", "application/json");
     return res.status(401).redirect("/")
   }

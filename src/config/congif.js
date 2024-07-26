@@ -22,5 +22,8 @@ export const config = {
     MONGO_URL_DB: process.env.MONGO_URL_DB,
     DB_NAME: process.env.DB_NAME,
     SECRET: process.env.SECRET,
-    DEBUG:process.env.DEBUG
+    DEBUG:process.env.DEBUG,
+    EMAIL_USER:process.env.EMAIL_USER,
+    EMAIL_PASS:process.env.EMAIL_PASS,
+    ADMIN_ID: process.env.ADMIN_ID
 };

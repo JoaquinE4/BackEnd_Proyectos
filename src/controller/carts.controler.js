@@ -159,15 +159,7 @@ export class CartsControler {
       );
     }
 
-    let carrito = await cartsService.getCartById({ _id: cid });
-    if (!carrito) {
-      CustomError.createError(
-        "Error No se encontro Carrito",
-        "Error No se encontro Carrito",
-        "Error No se encontro Carrito",
-        TIPOS_ERROR.ARGUMENTOS_INVALIDOS
-      );
-    }
+    let usuario = await usuarioService.getBy({ cart: cid });
 
     let producto = await productosService.getProductByCode({ _id: pid });
     if (!producto) {
@@ -175,6 +167,24 @@ export class CartsControler {
         "Error No se encontro Producto",
         "Error No se encontro Producto",
         "Error No se encontro Producto",
+        TIPOS_ERROR.ARGUMENTOS_INVALIDOS
+      );
+    } 
+    let uid = usuario._id;
+    let ownerId = producto.owner;
+
+
+    if (uid = ownerId) {
+      console.log("se termino");
+      return;
+    }
+
+    let carrito = await cartsService.getCartById({ _id: cid });
+    if (!carrito) {
+      CustomError.createError(
+        "Error No se encontro Carrito",
+        "Error No se encontro Carrito",
+        "Error No se encontro Carrito",
         TIPOS_ERROR.ARGUMENTOS_INVALIDOS
       );
     }

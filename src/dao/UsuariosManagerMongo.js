@@ -19,4 +19,20 @@ export class UsuariosManagerMongo {
       { new: true }
     );
   }
+
+  async updatePassword(id,newPassword){
+   return await usuarioModelo.findOneAndUpdate(
+      { _id: id },
+      { password: newPassword },
+      { new: true }
+  );
+  }
+  async updateRol(id,rol){
+   return await usuarioModelo.findOneAndUpdate(
+      { _id: id },
+      { rol: rol },
+      { new: true }
+  );
+  }
+
 }

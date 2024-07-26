@@ -28,3 +28,23 @@
   <p class="text-white pt-3 ">Email :<strong>{{usuario.email}}</strong></p>
 
 </div>
+
+<button id="request-reset-button" class="btn btn-warning mt-3">Restablcecer contraseña</button>
+
+<script>
+  document.getElementById('request-reset-button').addEventListener('click', async () => {
+    const email = '{{usuario.email}}'; // Obtener el correo electrónico del usuario actual
+
+    const response = await fetch('/api/sessions/pass-recuperacion', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email }),
+    });
+
+    if (response.ok) {
+      alert('Password reset email sent');
+    } else {
+      alert('Error: ' + await response.text());
+    }
+  });
+</script>

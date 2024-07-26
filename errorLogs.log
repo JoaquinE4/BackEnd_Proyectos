@@ -1,1 +1,14 @@
 error: undefined {"code":400,"name":"Error Faltandatos Complete los datos solicitados","timestamp":"2024-07-07T22:18:49.182Z"}
+error: undefined {"_message":"product validation failed","errors":{"owner":{"kind":"ObjectId","message":"Cast to ObjectId failed for value \"admin\" (type string) at path \"owner\" because of \"BSONError\"","name":"CastError","path":"owner","reason":{},"stringValue":"\"admin\"","value":"admin","valueType":"string"}},"timestamp":"2024-07-25T16:49:14.279Z"}
+error: undefined {"_message":"product validation failed","errors":{"owner":{"kind":"ObjectId","message":"Cast to ObjectId failed for value \"admin\" (type string) at path \"owner\" because of \"BSONError\"","name":"CastError","path":"owner","reason":{},"stringValue":"\"admin\"","value":"admin","valueType":"string"}},"timestamp":"2024-07-25T16:53:39.736Z"}
+error: undefined {"timestamp":"2024-07-25T16:59:37.921Z"}
+error: undefined {"timestamp":"2024-07-25T16:59:52.209Z"}
+error: undefined {"timestamp":"2024-07-25T17:01:05.496Z"}
+error: undefined {"timestamp":"2024-07-25T17:01:35.026Z"}
+error: undefined {"timestamp":"2024-07-25T17:02:35.870Z"}
+error: undefined {"timestamp":"2024-07-25T17:04:32.161Z"}
+error: undefined {"timestamp":"2024-07-25T17:06:07.096Z"}
+error: undefined {"timestamp":"2024-07-25T17:08:21.397Z"}
+error: undefined {"timestamp":"2024-07-25T17:08:35.898Z"}
+error: undefined {"timestamp":"2024-07-25T17:12:14.131Z"}
+error: undefined {"_message":"product validation failed","errors":{"owner":{"kind":"ObjectId","message":"Cast to ObjectId failed for value \"admin\" (type string) at path \"owner\" because of \"BSONError\"","name":"CastError","path":"owner","reason":{},"stringValue":"\"admin\"","value":"admin","valueType":"string"}},"timestamp":"2024-07-25T17:15:03.431Z"}
