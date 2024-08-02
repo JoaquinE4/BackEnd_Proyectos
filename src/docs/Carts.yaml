@@ -1,0 +1,66 @@
+paths:
+  /api/carts/{cid}/product/{pid}:
+    post:
+      summary: Agregar producto al carrito
+      tags:
+        - Carrito
+      security:
+        - basicAuth: []
+      parameters:
+        - in: path
+          name: cid
+          description: CART ID del usuario
+        - in: path
+          name: pid
+          description:  ID del producto
+      responses:
+        '200':
+          description: Producto agregado
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  payload:
+                    type: string
+                    example: Carrito actualizado
+        '400':
+          description: Error al agregar el producto al carrito
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    oneOf:
+                      - $ref: '#/components/errorPost/error1'
+                      - $ref: '#/components/errorPost/error2'
+                      - $ref: '#/components/errorPost/error3'  
+                       
+      
+components:
+  errorPost:
+    error1:
+      type: string
+      description: ID invalido
+      example: Error ID invalido     
+    error2:
+      type: string
+      description: No se encontro Producto
+      example: Error No se encontro Producto    
+    error3:
+      type: string
+      description: No se encontro el Usuario
+      example: Error No se encontro el Usuario
+    error4:
+      type: string
+      description: No se encontro Carrito
+      example: Error No se encontro Carrito
+
+  securitySchemes:
+    basicAuth:    
+      type: http
+      scheme: basic
+    bearerAuth:             
+      type: http
+      scheme: bearer

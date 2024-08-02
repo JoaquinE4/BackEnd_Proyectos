@@ -1,0 +1,230 @@
+paths:
+  /api/productos:
+    get:
+      summary: Lista de productos
+      tags:
+      - Productos
+      security:
+        - basicAuth: []
+        - bearerAuth: []
+      description: Obtiene una lista de productos disponibles
+      responses:
+        '200':
+          description: Listado de productos
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  productos:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Producto'
+    post:
+      summary: Registrar un nuevo producto.
+      description: Ruta para agregar un producto
+      tags:
+      - Productos
+      security:
+        - basicAuth: []
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+               $ref: '#components/reqBody/crearProducto'
+      responses:
+        '201':
+          description: Producto registrado correctamente
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: mensaje de registro
+                    example: Producto registrado correctamente
+                  product:
+                      $ref: '#/components/schemas/Producto'
+        '400':
+          description: Parámetros incorrectos o incompletos
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    oneOf:
+                      - $ref: '#/components/errorPost/error1'
+                      - $ref: '#/components/errorPost/error2'
+
+  /api/productos?limit=10&page=1&sort=asc:
+    get:
+      summary: Lista de productos
+      tags:
+      - Productos
+      description: Retorna una lista de productos con opciones de paginación y ordenamiento.
+      parameters:
+        - $ref: '#/components/parameters/SortQuery'
+        - $ref: '#/components/parameters/LimitQuery'
+        - $ref: '#/components/parameters/PageQuery'
+      responses:
+        '200':
+          description: Listado de productos
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  productos:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Producto'
+        '400':
+          description: Parámetros incorrectos o incompletos
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    oneOf:
+                      - $ref: '#/components/errorGet/error1'
+                      - $ref: '#/components/errorGet/error2'
+                      - $ref: '#/components/errorGet/error3'
+ 
+
+
+              
+
+
+
+components:
+  
+  schemas:
+    Producto:
+      type: object
+      properties:
+        id:
+          type: datatime
+          description: Codigo comformado por la fecha
+        _id:
+          type: ObjectId
+          description: ID del producto
+        title:
+          type: string
+          description: Título del producto
+        description:
+          type: string
+          description: Descripción del producto
+        price:
+          type: number
+          description: Precio del producto
+        thumbnail:
+          type: string
+          description: URL de la imagen del producto
+        code:
+          type: string
+          description: Código del producto
+        stock:
+          type: number
+          description: Stock del producto
+        owner:
+          type: ObjectId
+          description: ID del dueño del producto
+        createdAt:
+          type: datetime
+          description: Fecha de creación del producto
+        updatedAt:
+          type: datetime
+          description: Fecha de actualización del producto
+      example:
+        id: 1722536993169
+        title: Maceta colgante
+        description: Maceta de 1 litro con estructura de hierro  
+        price: 3000
+        thumbnail: 'http://image.io/a35fc7'
+        code: c5tD3b8
+        stock: 1
+        owner: 66a278fb26a88abbabfde78f
+        _id: 66abd421423eb3cd30bc6fed
+        createdAt: 2024-08-01T18:29:53.179Z
+        updatedAt: 2024-08-01T18:29:53.179Z
+  parameters:
+    LimitQuery:
+      in: query
+      name: limit
+      schema:
+        type: number
+        default: 10
+      description: Número máximo de productos a devolver
+    PageQuery:
+      in: query
+      name: page
+      schema:
+        type: integer
+        default: 1
+      description: Página de resultados
+    SortQuery:
+      in: query
+      name: sort
+      schema:
+        type: string
+        enum: [asc , desc]
+        default: asc
+      description: Ordenamiento de los resultados (ascendente o descendente)
+  errorGet:
+    error1:
+      type: string
+      description: Parametro sort invalido
+      example: Parametro sort invalido. Use 'asc' or 'desc'.      
+      
+  errorPost:
+    error1:
+      type: string
+      description: Faltandatos datos solicitados 
+      example: Error Faltandatos Complete los datos solicitados     
+    error2:
+      type: string
+      description: Ya existe un producto con ese codigo
+      example: Ya existe un producto con ese codigo             
+  reqBody:
+    crearProducto:
+      type: object
+      properties:
+        title:
+          type: string
+          description: nombre de producto
+        description:
+          type: string
+          description: description de producto
+        price:
+          type: string
+          description: precio del producto
+        code:
+          type: string
+          description: codigo del producto
+        stock:
+          type: number
+          description: stock del producto
+        thumbnail:
+          type: string
+          description: URL de la imagen del producto
+      example:
+
+        title: qeqeweqwtineta
+        description: Tutor tuli 
+        price: 3000
+        thumbnail: deqwees
+        code: s34bs
+        stock: 1
+
+  securitySchemes:
+    basicAuth:    
+      type: http
+      scheme: basic
+    bearerAuth:             
+      type: http
+      scheme: bearer

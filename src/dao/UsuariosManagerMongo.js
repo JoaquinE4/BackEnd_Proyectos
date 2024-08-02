@@ -5,6 +5,10 @@ export class UsuariosManagerMongo {
     return await usuarioModelo.create(usuario);
   }
 
+  async getAll(){
+    return await usuarioModelo.find().lean()
+  }
+
   async getBy(filtro = {}) {
     return await usuarioModelo.findOne(filtro).lean();
   }

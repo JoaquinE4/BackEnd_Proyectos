@@ -19,6 +19,8 @@ import { errorHandler } from "./middleware/errorHandler.js";
 import { router as mokingRouter } from "./router/moking.router.js";
 import { router as loggerRouter } from "./router/logger.router.js";
 import {   logger, middLogger } from "./utils/Logger.js";
+import swagger from 'swagger-jsdoc'
+import swaggerUi from 'swagger-ui-express'
  
 const PORT = config.PORT;
 const app = express();
@@ -40,6 +42,21 @@ app.use(
   })
 );
 
+const options={
+  definition:{
+    openapi: "3.0.0",
+    info: {
+      title: "API RESTful",
+      version: "1.0.0",
+      description: "API para gestionar productos, carrito y usuarios",
+    },
+  },
+  apis: [ "./src/docs/*.yaml" ]
+}
+
+const spec= swagger(options)
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(spec))
+
 initPasport();
 app.use(passport.initialize());
 app.use(passport.session());
@@ -55,6 +72,8 @@ app.use("/api/productos", productosRouter);
 app.use("/api/carts", cartsRouter);
 app.use("/", vistasRouter);
 app.use(errorHandler)
+
+ 
  let usuarios = [];
 
 const server = app.listen(PORT, () =>{

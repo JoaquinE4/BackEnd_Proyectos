@@ -1,0 +1,292 @@
+paths:
+  /api/sessions/usuarios:
+    get:
+      summary: Lista de usuarios.
+      tags:
+        - Usuarios
+      description: Optional extended description in CommonMark or HTML.
+      responses:
+        '200':    # status code
+          description: A JSON array of user names
+          content:
+            application/json:
+              schema: 
+                type: object
+                properties:
+                  usuarios:
+                    type: array
+                    items: 
+                      $ref: '#components/schemas/usuario'
+        '404':    # status code
+          description: Error not found
+          content:
+            application/json:
+              schema: 
+                type: array
+                items: 
+                  type: string
+  /api/sessions/registro:
+    post:
+      summary: Registrar de usuario.
+      description: Optional extended description in CommonMark or HTML.
+      tags:
+        - Usuarios
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#components/requestBodies/crearUsuario' 
+      responses:
+        '200':    # status code
+          description: A JSON array of user names
+          content:
+            application/json:
+              schema: 
+                type: array
+                items: 
+                  $ref: '#components/schemas/usuario'
+        '400':    # status code
+          description: Errores de registro
+          content:
+            application/json:
+              schema: 
+                oneOf:
+                  - $ref: '#/components/registroError/error1'
+                  - $ref: '#/components/registroError/error2'
+                  - $ref: '#/components/registroError/error3'
+  /api/sessions/login:
+    post:
+      summary: Login de usuario.
+      description: Optional extended description in CommonMark or HTML.
+      tags:
+        - Usuarios
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#components/requestBodies/ingresarUsuario' 
+      responses:
+        '200':    # status code
+          description: A JSON array of user names
+          content:
+            application/json:
+              schema: 
+                type: array
+                items: 
+                  $ref: '#components/schemas/usuarioClean'
+        '400':    # status code
+          description: Errores de Login
+          content:
+            application/json:
+              schema: 
+                oneOf:
+                  - $ref: '#/components/LoginError/error1'
+                  - $ref: '#/components/LoginError/error2'
+                  - $ref: '#/components/LoginError/error3'
+  /api/sessions/premium/{uid}:
+    put:
+      summary: Modificacion de privilegios.
+      description: Optional extended description in CommonMark or HTML.
+      tags:
+        - Usuarios
+      parameters:
+        - in: path
+          name: uid
+          description: UID del usuario
+      responses:
+        '200':
+          description: Modificar privilegios del usuario
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: '#/components/premium/acierto1'
+                  - $ref: '#/components/premium/acierto2'
+        '500':
+          description: Error en la modificación de privilegios
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Mensaje de error
+                    example: Error al modificar privilegios
+ 
+
+
+ 
+                  
+
+components:
+  schemas:
+    usuario:
+      type: object
+      properties:
+        _id:
+          type: ObjectId
+          description: ID del usuario
+        first_name:
+          type: string
+          description: Nombre del usuario
+        last_name:
+          type: string
+          description: Apellido del usuario
+        age:
+          type: number
+          description: Edad del usuario
+        email:
+          type: string
+          description: Correo electrónico del usuario
+        password:
+          type: string
+          description: Contraseña del usuario
+        cart:
+          type: ObjectId
+          description: ID del carrito
+        createdAt:
+          type: string
+          format: date-time
+          description: Fecha de creación del usuario
+        updatedAt:
+          type: string
+          format: date-time
+          description: Fecha de actualización del usuario
+    
+    usuarioClean:
+      type: object
+      properties:
+        _id:
+          type: ObjectId
+          description: ID del usuario
+        first_name:
+          type: string
+          description: Nombre del usuario
+        last_name:
+          type: string
+          description: Apellido del usuario
+        age:
+          type: number
+          description: Edad del usuario
+        email:
+          type: string
+          description: Correo electrónico del usuario
+        cart:
+          type: ObjectId
+          description: ID del carrito
+        createdAt:
+          type: string
+          format: date-time
+          description: Fecha de creación del usuario
+        updatedAt:
+          type: string
+          format: date-time
+          description: Fecha de actualización del usuario
+      example:
+        _id: ObjectId("66ab996374bd5b0335d2476b")
+        first_name: John
+        last_name: Doe
+        age: 30
+        email: doe@test.com,
+        rol: user
+        cart: ObjectId("66ab996374bd5b033sd24769")
+        createdAt: 2024-08-01T14:19:15.137Z
+        updatedAt: 2024-08-01T14:19:15.137Z
+  registroError:
+      error1:
+        type: object
+        properties:
+          error:
+            type: string
+            description: Error por falta de nombre o apellido
+            example: Datos inválidos o inexistentes
+      
+      error2:
+        type: object
+        properties:
+          error:
+            type: string
+            description: Edad inválida o inexistente
+            example: Edad inválida o inexistente
+      
+      error3:
+        type: object
+        properties:
+          error:
+            type: string
+            description: Email ya registrado
+            example: Ya existe usuario con ese email
+  LoginError:
+      error1:
+        type: object
+        properties:
+          error:
+            type: string
+            description: Error por falta de nombre o apellido
+            example: Error datos inválidos 
+      
+      error2:
+        type: object
+        properties:
+          error:
+            type: string
+            description: Edad inválida o inexistente
+            example: Usuario no encontrado
+      
+      error3:
+        type: object
+        properties:
+          error:
+            type: string
+            description: Contraseña incorrecta
+            example: Contraseña incorrecta
+  requestBodies:
+    crearUsuario:
+      type: object
+      properties:
+        first_name:
+          type: string
+        last_name:
+          type: string
+        age:
+          type: number
+        email:
+          type: string
+        password:
+          type: string
+      example:
+        first_name: John
+        last_name: Doe
+        age: 30
+        email: doe@test.com
+        password: emaildoe
+    ingresarUsuario:
+      type: object
+      properties:
+        email:
+          type: string
+          description: email del usuario 
+        password:
+          type: string
+          description: contraseña usuario
+      example:
+        email: doe@test.com
+        password: emaildoe
+  premium:
+    acierto1:
+      type: object
+      properties:
+        payload:
+          type: string
+          description: Rol usuario modificado
+          example: Rol user adquirido
+    acierto2:
+      type: object
+      properties:
+        payload:      
+          type: string
+          description: Rol premium modificado
+          example: Rol premium adquirido

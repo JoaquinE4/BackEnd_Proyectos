@@ -6,7 +6,6 @@ import __dirname from "../utils.js";
 import { isValidObjectId } from "mongoose";
 import { CustomError } from "../utils/CustomError.js";
 import { TIPOS_ERROR } from "../utils/Error.js";
-import { logger } from "../utils/Logger.js";
 
 const usuarioService = new UsuarioManager();
 
@@ -150,76 +149,87 @@ export class CartsControler {
 
   static postProdCart = async (req, res, next) => {
     let { cid, pid } = req.params;
-    if (!isValidObjectId(cid) || !isValidObjectId(pid)) {
-      CustomError.createError(
-        "Error ID invalido",
-        "Error ID invalido",
-        "Error ID invalido",
-        TIPOS_ERROR.ARGUMENTOS_INVALIDOS
-      );
-    }
-
-    let usuario = await usuarioService.getBy({ cart: cid });
-
-    let producto = await productosService.getProductByCode({ _id: pid });
-    if (!producto) {
-      CustomError.createError(
-        "Error No se encontro Producto",
-        "Error No se encontro Producto",
-        "Error No se encontro Producto",
-        TIPOS_ERROR.ARGUMENTOS_INVALIDOS
-      );
-    } 
-    let uid = usuario._id;
-    let ownerId = producto.owner;
-
-
-    if (uid = ownerId) {
-      console.log("se termino");
-      return;
-    }
-
-    let carrito = await cartsService.getCartById({ _id: cid });
-    if (!carrito) {
-      CustomError.createError(
-        "Error No se encontro Carrito",
-        "Error No se encontro Carrito",
-        "Error No se encontro Carrito",
-        TIPOS_ERROR.ARGUMENTOS_INVALIDOS
-      );
-    }
-
-    let indiceProducto = carrito.products.findIndex((p) => p.product == pid);
-    if (indiceProducto === -1) {
-      carrito.products.push({
-        product: pid,
-        quantity: 1,
-      });
-
-      carrito.total += producto.price;
-    } else {
-      carrito.products[indiceProducto].quantity++;
-      carrito.total = await calculateTotal(carrito.products);
-    }
-
-    async function calculateTotal(products) {
-      let total = 0;
-      for (const item of products) {
-        try {
-          const product = await productosService.getProductByCode(
-            item.product._id
-          );
-          if (product) {
-            total += product.price * item.quantity;
-          }
-        } catch (error) {
-          console.error("Error fetching product:", error);
-        }
-      }
-      return total;
-    }
-
+    
     try {
+      
+      if (!isValidObjectId(cid) || !cid || !isValidObjectId(pid) || !pid) {
+          CustomError.createError(
+          "Error ID invalido",
+          "Error ID invalido",
+          "Error ID invalido",
+          TIPOS_ERROR.ARGUMENTOS_INVALIDOS
+        )
+      }
+  
+      let usuario = await usuarioService.getBy({ cart: cid });
+  
+      if (!usuario) {
+        CustomError.createError(
+          "Error No se encontro Usuario",
+          "Error No se encontro Usuario",
+          "Error No se encontro Usuario",
+          TIPOS_ERROR.ARGUMENTOS_INVALIDOS
+        );
+      }
+
+     let carrito = await cartsService.getCartById(usuario.cart)
+     if (!carrito) {
+      CustomError.createError(
+        "Error No se encontro Carrito",
+        "Error No se encontro Carrito",
+        "Error No se encontro Carrito",
+        TIPOS_ERROR.ARGUMENTOS_INVALIDOS
+      );
+    }
+
+  
+      let producto = await productosService.getProductByCode({ _id: pid });
+      if (!producto) {
+         CustomError.createError(
+          "Error No se encontro Producto",
+          "Error No se encontro Producto",
+          "Error No se encontro Producto",
+          TIPOS_ERROR.ARGUMENTOS_INVALIDOS
+        );
+      } 
+      let uid = usuario._id;
+      let ownerId = producto.owner;
+  
+  
+      if (uid = ownerId) {
+        console.log("se termino");
+        return;
+      }
+  
+      let indiceProducto = carrito.products.findIndex((p) => p.product == pid);
+      if (indiceProducto === -1) {
+        carrito.products.push({
+          product: pid,
+          quantity: 1,
+        });
+  
+        carrito.total += producto.price;
+      } else {
+        carrito.products[indiceProducto].quantity++;
+        carrito.total = await calculateTotal(carrito.products);
+      }
+  
+      async function calculateTotal(products) {
+        let total = 0;
+        for (const item of products) {
+          try {
+            const product = await productosService.getProductByCode(
+              item.product._id
+            );
+            if (product) {
+              total += product.price * item.quantity;
+            }
+          } catch (error) {
+            console.error("Error fetching product:", error);
+          }
+        }
+        return total;
+      }
       let resultado = await cartsService.update(cid, carrito);
       if (resultado.modifiedCount > 0) {
         req.logger.debug("Exito al agregar producto al carrito");
@@ -298,7 +308,7 @@ export class CartsControler {
     try {
       let resultado = await cartsService.update(cid, carrito);
       if (resultado.modifiedCount > 0) {
-        req.logger.debug("Exito al acualizar lista de productos del carrito");
+        req.logger.debug({payload:"Exito al acualizar lista de productos del carrito"});
 
         res.setHeader("Content-Type", "application/json");
         return res.status(200).json({ payload: "Cantidad actualizada" });

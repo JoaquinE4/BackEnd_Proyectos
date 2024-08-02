@@ -12,7 +12,6 @@ export const generateHash = (password) =>
 export const validaPassword = (password, passwordHash) =>
   bcrypt.compareSync(password, passwordHash);
 
-
 export const passportCall = (estrategia) => {
   return function (req, res, next) {
     passport.authenticate(estrategia, function (err, user, info, status) {

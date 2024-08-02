@@ -3,7 +3,6 @@ import { UsuariosManagerMongo as UsuariosManager } from "../dao/UsuariosManagerM
 import passport from "passport";
 import { generateHash, passportCall, validaPassword } from "../utils.js";
 import { UsuarioDTO } from "../DTO/UsuarioDTO.js";
-import { logger } from "../utils/Logger.js";
 import { config } from "../config/congif.js";
 import jwt from "jsonwebtoken";
 import { transporter } from "../utils/Mailin.js";
@@ -24,51 +23,55 @@ router.get("/error", (req, res) => {
 
 router.get("/usuarios", async (req, res, next) => {
   try {
+      
+
     let usuarios = await usuariosManager.getAll();
-
+    
     res.setHeader("Content-Type", "application/json");
-
+    
     return res.status(200).json({ usuarios });
-  } catch {
-    next(
-      CustomError.createError(
-        "Error de búsqueda",
-        "No se ejecutó el servicio",
-        "Error al realizar la búsqueda",
-        TIPOS_ERROR.INTERNAL_SERVER_ERROR
-      )
-    );
+  } catch (error) {
+    next(CustomError.createError(
+      "Error de búsqueda",
+      "No se ejecutó el servicio",
+      error.message || "Error al realizar la búsqueda", // Incluye el mensaje del error
+      TIPOS_ERROR.INTERNAL_SERVER_ERROR
+    ));
   }
 });
 
-router.post("/registro", passportCall("registro"), async (req, res) => {
-  let userClean = new UsuarioDTO(req.session.user);
-
-  req.session.user = userClean;
-  res.setHeader("Content-Type", "application/json");
-  return res.status(201).json(req.session.user);
-});
-
-router.post("/login", passportCall("login"), async (req, res, next) => {
-  let userClean = new UsuarioDTO(req.session.user);
-
-  req.session.user = userClean;
-  console.log(req.session.user);
+router.post("/registro", passportCall("registro"), async (req, res, next) => {
   try {
+    let userClean = new UsuarioDTO(req.session.user);
+    req.session.user = userClean;
+
     res.setHeader("Content-Type", "application/json");
-    return res.status(200).json(req.session.user);
+    return res.status(201).json(req.session.user);
   } catch (error) {
+    req.logger.error(error);
     next(error);
   }
 });
 
+router.post("/login", passportCall("login"), async (req, res  ) => {
+ 
+    let userClean = new UsuarioDTO(req.session.user);
+
+    req.session.user = userClean;
+
+    res.setHeader("Content-Type", "application/json");
+    return res.status(200).status(req.session.user);
+ 
+});
+
 router.get("/github", passport.authenticate("github", {}), (req, res) => {});
 router.get("/callbackGithub", passportCall("github"), (req, res) => {
-  console.log("QUERY PARAMS:", req.query);
+
   req.session.user = req.user;
 
   res.setHeader("Content-Type", "application/json");
-  return res.status(200).redirect("/");
+  return res.status(200).json(req.session.user);
+  
 });
 
 router.get("/logout", (req, res) => {
@@ -85,7 +88,7 @@ router.get("/logout", (req, res) => {
   });
 
   res.setHeader("Content-Type", "application/json");
-  res.status(200).json({ payload: "Session destruida con exito" });
+  res.status(200).json({ payload: "Logout exitoso" });
 });
 
 router.post("/pass-recuperacion", async (req, res) => {
@@ -136,12 +139,9 @@ router.post("/reset-password/:token", async (req, res) => {
   const validPassword = await validaPassword(newPassword, user.password);
   if (validPassword) {
     res.setHeader("Content-Type", "application/json");
-    return CustomError.createError(
-      "contraseña invalida",
-      "contraseña invalida",
-      "La contraseña no puede ser la misma",
-      TIPOS_ERROR.ARGUMENTOS_INVALIDOS
-    )
+    return res
+      .status(400)
+      .json({ error: `La contraseña no puede ser la misma` });
   }
 
   let password = generateHash(newPassword);
@@ -151,12 +151,10 @@ router.post("/reset-password/:token", async (req, res) => {
     res.setHeader("Content-Type", "application/json");
     return res.status(200).json("Contraseña actualizada con Exito!");
   } catch (error) {
-    return CustomError.createError(
-      "Error al modificar la contraseña",
-      "Error al modificar la contraseña",
-      "Error al modificar la contraseña",
-      TIPOS_ERROR.ARGUMENTOS_INVALIDOS
-    )
+    res.setHeader("Content-Type", "application/json");
+    return res.status(500).json({
+      error: `Error al actualizar contraseña`,
+    });
   }
 });
 
@@ -167,30 +165,16 @@ router.put("/premium/:uid", async (req, res, next) => {
     let usuario = await usuariosManager.getBy({ _id: uid });
 
     if (!usuario) {
-      return CustomError.createError(
-        "Usuario no encontrado",
-        "Usuario no encontrado",
-        "Usuario no encontrado",
-        TIPOS_ERROR.AUTENTICACION
-      );
+      return res.status(404).json({ mensaje: "Usuario no encontrado" });
     }
 
     if (usuario.rol === "user") {
       let rol = await usuariosManager.updateRol(usuario._id, "premium");
-      res.setHeader("Content-Type", "application/json");
-      return res.status(200).json({ payload: "Rol premium adquirido" });
     } else if (usuario.rol === "premium") {
       let rol = await usuariosManager.updateRol(usuario._id, "user");
-      res.setHeader("Content-Type", "application/json");
-      return res.status(200).json({ payload: "Rol user adquirido" });
-    } else {
-      return CustomError.createError(
-        "Operacion invalida",
-        "Error al modificar privilegios",
-        "Error al modificar privilegios",
-        TIPOS_ERROR.INTERNAL_SERVER_ERROR
-      );
     }
+    res.setHeader("Content-Type", "application/json");
+    return res.status(200).json({ payload: "Rol actualizado" });
   } catch (error) {
     next(error);
   }

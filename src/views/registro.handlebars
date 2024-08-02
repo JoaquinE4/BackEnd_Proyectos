@@ -20,22 +20,16 @@
 
 <div class="formsDiv" data-aos="zoom-out">
   <h3>Sing In</h3>
-  <form class=" d-flex flex-column align-content-center align-items-center justify-content-center  "
-    action="/api/sessions/registro" method="post">
-
-    <input type="text" name="first_name" placeholder="ingrese Nombre">
-    <input type="text" name="last_name" placeholder="ingrese Apellido">
-    <input type="number" name="age" placeholder="ingrese su Edad">
-    <input type="email" name="email" placeholder="ingrese correo electronico">
-    <input type="password" name="password" placeholder="ingrese contraseña">
-    <div class="d-flex gap-4 mt-4 ">
-
-      <button class="btn btn-dark btna " type="submit" value="Registrar">Registrar</button>
-      <a href="/login" class="btn btn-dark btna " value="Logiar">Sing up</a>
+<form class="d-flex flex-column align-content-center align-items-center justify-content-center" id="registerForm">
+    <input type="text" name="first_name" placeholder="Ingrese Nombre">
+    <input type="text" name="last_name" placeholder="Ingrese Apellido">
+    <input type="number" name="age" placeholder="Ingrese su Edad">
+    <input type="email" name="email" placeholder="Ingrese correo electrónico">
+    <input type="password" name="password" placeholder="Ingrese contraseña">
+    <div class="d-flex gap-4 mt-4">
+        <button class="btn btn-dark btna" type="submit">Registrar</button>
+        <a href="/login" class="btn btn-dark btna">Sing up</a>
     </div>
-
-
-
-  </form>
-
+</form>
 </div>
+<script src="/js/register.js"></script>

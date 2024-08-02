@@ -20,19 +20,19 @@
 
 <div class="formsDiv" data-aos="zoom-out">
   <h3>Sign up</h3>
-  <form class="d-flex flex-column align-content-center align-items-center justify-content-center" id="loginForm"
-    action="/api/sessions/login" method="post">
-
-    <input type="email" name="email" placeholder="Ingrese correo electrónico">
-    <input type="password" name="password" placeholder="Ingrese contraseña">
+  <form class="d-flex flex-column align-content-center align-items-center justify-content-center" id="loginForm">
+    <input type="email" name="email" placeholder="Ingrese correo electrónico" required>
+    <input type="password" name="password" placeholder="Ingrese contraseña" required>
     <input type="text" name="web" value="web" hidden>
     <div class="d-flex gap-4 mt-4">
       <button class="btn btn-dark btna" id="login" type="submit">Login</button>
 
-      <a href="/api/sessions/github" class="btn btn-dark btna "><i class="fa-brands fa-github fa-flip-horizontal"
-          style="color: #000000;"></i></i></a>
-
-
+      <a href="/api/sessions/github" class="btn btn-dark btna"><i class="fa-brands fa-github fa-flip-horizontal"
+          style="color: #000000;"></i></a>
     </div>
-  </form>
+</form>
+
+
 </div>
+
+<script src="/js/login.js"></script>

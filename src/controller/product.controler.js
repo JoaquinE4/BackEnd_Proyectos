@@ -9,14 +9,14 @@ export class ProductosControler {
   static getProduct = async (req, res, next) => {
     let { limit, sort, page } = req.query;
     limit = Number(limit);
-    if (!limit || limit <= 0) {
+    if (isNaN(limit) || limit <= 0) {
       limit = 10;
-    }
+    } 
     page = Number(page);
 
-    if (!page) {
+    if (isNaN(page) || page <= 0) {
       page = 1;
-    }
+    } 
 
     try {
       let { docs: productos } = await productosService.getProductsPaginate(
@@ -28,17 +28,23 @@ export class ProductosControler {
           productos = productos.sort((a, b) => a.price - b.price);
         } else if (sort === "desc") {
           productos = productos.sort((a, b) => b.price - a.price);
+        } else {
+          return CustomError.createError(
+            "Parametro sort invalido. Use 'asc' or 'desc'.",
+            "Parametro sort invalido. Use 'asc' or 'desc'.",
+            "Parametro sort invalido. Use 'asc' or 'desc'.",
+            TIPOS_ERROR.ARGUMENTOS_INVALIDOS
+          )
         }
       }
 
       if (limit && limit > 0) {
         productos = productos.slice(0, limit);
       }
-
-      req.logger.debug("Exito al buscar todos los productos");
+       req.logger.debug("Exito al buscar todos los productos");
       res.setHeader("Content-Type", "application/json");
       return res.status(200).json({ productos });
-    } catch (error) {
+    } catch(error){
       req.logger.error(error);
 
       next(error);
@@ -59,6 +65,14 @@ export class ProductosControler {
 
     try {
       let productId = await productosService.getProductByCode({ _id: id });
+      if(!productId.ok){
+        return CustomError.createError(
+          "Error No se encontro Producto",
+          "Error No se encontro Producto",
+          "Error No se encontro Producto",
+          TIPOS_ERROR.INTERNAL_SERVER_ERROR
+        ) 
+      }
       req.logger.debug("Exito al buscar producto" + productId);
 
       res.setHeader("Content-Type", "application/json");
@@ -87,17 +101,19 @@ export class ProductosControler {
 
       let existe = await productosService.getProductByCode({ code });
       if (existe) {
-        res.setHeader("Content-Type", "application/json");
-        return res
-          .status(400)
-          .json({ error: "Ya existe un producto con este código" });
+        return CustomError.createError(
+          "Ya existe un producto con ese codigo",
+          "Ya existe un producto con ese codigo",
+          "Ya existe un producto con ese codigo",
+          TIPOS_ERROR.ARGUMENTOS_INVALIDOS
+        )
       }
-      let owner 
-    if(usuario.rol == "premium"){
-      owner = usuario._id
-    }else{
-      owner = config.ADMIN_ID
-    }
+          let owner 
+        if(usuario.rol == "premium"){
+          owner = usuario._id
+        }else{
+          owner = config.ADMIN_ID
+        }
 
       const id = Date.now().toString();
       newProduct = await productosService.addProduct({

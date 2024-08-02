@@ -1,14 +1,58 @@
-error: undefined {"code":400,"name":"Error Faltandatos Complete los datos solicitados","timestamp":"2024-07-07T22:18:49.182Z"}
-error: undefined {"_message":"product validation failed","errors":{"owner":{"kind":"ObjectId","message":"Cast to ObjectId failed for value \"admin\" (type string) at path \"owner\" because of \"BSONError\"","name":"CastError","path":"owner","reason":{},"stringValue":"\"admin\"","value":"admin","valueType":"string"}},"timestamp":"2024-07-25T16:49:14.279Z"}
-error: undefined {"_message":"product validation failed","errors":{"owner":{"kind":"ObjectId","message":"Cast to ObjectId failed for value \"admin\" (type string) at path \"owner\" because of \"BSONError\"","name":"CastError","path":"owner","reason":{},"stringValue":"\"admin\"","value":"admin","valueType":"string"}},"timestamp":"2024-07-25T16:53:39.736Z"}
-error: undefined {"timestamp":"2024-07-25T16:59:37.921Z"}
-error: undefined {"timestamp":"2024-07-25T16:59:52.209Z"}
-error: undefined {"timestamp":"2024-07-25T17:01:05.496Z"}
-error: undefined {"timestamp":"2024-07-25T17:01:35.026Z"}
-error: undefined {"timestamp":"2024-07-25T17:02:35.870Z"}
-error: undefined {"timestamp":"2024-07-25T17:04:32.161Z"}
-error: undefined {"timestamp":"2024-07-25T17:06:07.096Z"}
-error: undefined {"timestamp":"2024-07-25T17:08:21.397Z"}
-error: undefined {"timestamp":"2024-07-25T17:08:35.898Z"}
-error: undefined {"timestamp":"2024-07-25T17:12:14.131Z"}
-error: undefined {"_message":"product validation failed","errors":{"owner":{"kind":"ObjectId","message":"Cast to ObjectId failed for value \"admin\" (type string) at path \"owner\" because of \"BSONError\"","name":"CastError","path":"owner","reason":{},"stringValue":"\"admin\"","value":"admin","valueType":"string"}},"timestamp":"2024-07-25T17:15:03.431Z"}
+error: undefined {"timestamp":"2024-08-01T20:09:35.251Z"}
+error: undefined {"timestamp":"2024-08-01T20:09:53.003Z"}
+error: undefined {"code":400,"name":"Invalid sort parameter. Use 'asc' or 'desc'.","timestamp":"2024-08-01T20:13:00.110Z"}
+error: undefined {"code":400,"name":"Parametro sort invalido. Use 'asc' or 'desc'.","timestamp":"2024-08-01T20:13:51.145Z"}
+error: undefined {"code":400,"name":"Parametro sort invalido. Use 'asc' or 'desc'.","timestamp":"2024-08-01T20:20:06.978Z"}
+error: undefined {"code":400,"name":"Parametro sort invalido. Use 'asc' or 'desc'.","timestamp":"2024-08-01T20:20:18.723Z"}
+error: undefined {"code":400,"name":"Parametro sort invalido. Use 'asc' or 'desc'.","timestamp":"2024-08-01T20:21:52.361Z"}
+error: undefined {"code":400,"name":"Parametro sort invalido. Use 'asc' or 'desc'.","timestamp":"2024-08-01T20:31:41.003Z"}
+error: undefined {"timestamp":"2024-08-01T21:36:10.156Z"}
+error: undefined {"timestamp":"2024-08-01T21:36:19.428Z"}
+error: undefined {"timestamp":"2024-08-01T21:40:03.019Z"}
+error: undefined {"timestamp":"2024-08-01T21:40:20.403Z"}
+error: undefined {"timestamp":"2024-08-01T21:40:29.177Z"}
+error: undefined {"timestamp":"2024-08-01T21:40:56.586Z"}
+error: undefined {"timestamp":"2024-08-01T21:41:25.409Z"}
+error: undefined {"timestamp":"2024-08-01T21:41:55.691Z"}
+error: undefined {"timestamp":"2024-08-01T21:42:16.634Z"}
+error: undefined {"code":400,"name":"Ya existe un producto con ese codigo","timestamp":"2024-08-01T21:43:20.240Z"}
+error: undefined {"code":400,"name":"Error Faltandatos Complete los datos solicitados","timestamp":"2024-08-01T21:43:32.736Z"}
+error: undefined {"code":400,"name":"Error Faltandatos Complete los datos solicitados","timestamp":"2024-08-01T21:44:12.398Z"}
+error: undefined {"code":400,"name":"Ya existe un producto con ese codigo","timestamp":"2024-08-01T21:44:24.894Z"}
+error: undefined {"code":400,"name":"Ya existe un producto con ese codigo","timestamp":"2024-08-01T21:46:09.345Z"}
+error: undefined {"code":400,"name":"Ya existe un producto con ese codigo","timestamp":"2024-08-01T21:46:39.443Z"}
+error: undefined {"code":400,"name":"Error Faltandatos Complete los datos solicitados","timestamp":"2024-08-01T21:48:21.934Z"}
+error: undefined {"code":400,"name":"Ya existe un producto con ese codigo","timestamp":"2024-08-01T21:50:40.155Z"}
+error: undefined {"code":400,"name":"Ya existe un producto con ese codigo","timestamp":"2024-08-01T22:01:34.888Z"}
+error: undefined {"code":400,"name":"Error Faltandatos Complete los datos solicitados","timestamp":"2024-08-01T22:01:43.474Z"}
+error: undefined {"code":400,"name":"Error No se encontro Carrito","timestamp":"2024-08-01T23:13:41.695Z"}
+error: undefined {"code":400,"name":"Error Faltandatos Complete los datos solicitados","timestamp":"2024-08-01T23:26:12.025Z"}
+error: undefined {"causa":"No se encontró el producto solicitado","code":400,"name":"Error No se encontro Producto","timestamp":"2024-08-01T23:45:06.866Z"}
+error: undefined {"causa":"Error No se encontro Producto","code":400,"name":"Error No se encontro Producto","timestamp":"2024-08-01T23:46:00.427Z"}
+error: undefined {"causa":"Error ID invalido","code":400,"name":"Error ID invalido","timestamp":"2024-08-01T23:47:39.658Z"}
+error: undefined {"causa":"Error No se encontro Producto","code":400,"name":"Error No se encontro Producto","timestamp":"2024-08-01T23:48:14.018Z"}
+error: undefined {"causa":"Error No se encontro Producto","code":400,"name":"Error No se encontro Producto","timestamp":"2024-08-01T23:49:40.413Z"}
+error: undefined {"causa":"Error ID invalido","code":400,"name":"Error ID invalido","timestamp":"2024-08-01T23:49:51.669Z"}
+error: undefined {"causa":"Error No se encontro Producto","code":400,"name":"Error No se encontro Producto","timestamp":"2024-08-02T00:01:56.484Z"}
+error: undefined {"causa":"Error ID invalido","code":400,"name":"Error ID invalido","timestamp":"2024-08-02T00:02:04.176Z"}
+error: undefined {"causa":"Error ID invalido","code":400,"name":"Error ID invalido","timestamp":"2024-08-02T00:02:12.480Z"}
+error: undefined {"timestamp":"2024-08-02T00:02:21.529Z"}
+error: undefined {"causa":"Error No se encontro Producto","code":400,"name":"Error No se encontro Producto","timestamp":"2024-08-02T00:04:45.266Z"}
+error: undefined {"timestamp":"2024-08-02T00:05:02.604Z"}
+error: undefined {"causa":"Error No se encontro Producto","code":400,"name":"Error No se encontro Producto","timestamp":"2024-08-02T00:08:13.476Z"}
+error: undefined {"causa":"Error ID invalido","code":400,"name":"Error ID invalido","timestamp":"2024-08-02T00:08:25.959Z"}
+error: undefined {"timestamp":"2024-08-02T00:08:51.702Z"}
+error: undefined {"timestamp":"2024-08-02T00:12:10.034Z"}
+error: undefined {"timestamp":"2024-08-02T00:12:11.547Z"}
+error: undefined {"timestamp":"2024-08-02T00:12:25.896Z"}
+error: undefined {"causa":"Error No se encontro Usuario","code":400,"name":"Error No se encontro Usuario","timestamp":"2024-08-02T00:13:40.757Z"}
+error: undefined {"causa":"Error No se encontro Carrito","code":400,"name":"Error No se encontro Carrito","timestamp":"2024-08-02T00:14:10.078Z"}
+error: undefined {"timestamp":"2024-08-02T00:14:50.520Z"}
+error: undefined {"timestamp":"2024-08-02T00:15:28.185Z"}
+error: undefined {"timestamp":"2024-08-02T00:16:27.637Z"}
+error: undefined {"timestamp":"2024-08-02T00:17:02.552Z"}
+error: undefined {"timestamp":"2024-08-02T00:17:07.725Z"}
+error: undefined {"timestamp":"2024-08-02T00:17:14.753Z"}
+error: undefined {"causa":"Parametro sort invalido. Use 'asc' or 'desc'.","code":400,"name":"Parametro sort invalido. Use 'asc' or 'desc'.","timestamp":"2024-08-02T00:47:35.107Z"}
+error: undefined {"causa":"Error No se encontro Producto","code":400,"name":"Error No se encontro Producto","timestamp":"2024-08-02T01:00:43.836Z"}
+error: undefined {"causa":"Error No se encontro Usuario","code":400,"name":"Error No se encontro Usuario","timestamp":"2024-08-02T01:00:54.091Z"}

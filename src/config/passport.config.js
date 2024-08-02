@@ -4,6 +4,8 @@ import github from "passport-github2";
 import { UsuariosManagerMongo } from "../dao/UsuariosManagerMongo.js";
 import { generateHash, validaPassword } from "../utils.js";
  import { cartsService } from "../repository/Carts.service.js";
+import { CustomError } from "../utils/CustomError.js";
+import { TIPOS_ERROR } from "../utils/Error.js";
 
 const usuariosManager = new UsuariosManagerMongo();
  export const initPasport = () => {
@@ -18,17 +20,32 @@ const usuariosManager = new UsuariosManagerMongo();
         try {
           let { first_name , last_name, age } = req.body;
           if (!first_name || !last_name ) {
-            return done(null, false);
+            return done(CustomError.createError(
+              "Error datos invalido",
+              "Datos invalido o inexistente",
+              "Datos invalido o inexistente",  
+              TIPOS_ERROR.ARGUMENTOS_INVALIDOS
+            ));
           }
 
           age=Number(age)
           if(isNaN(age)){
-            return done(null, false);
+            return done(CustomError.createError(
+              "Error dato invalido",
+              "Dato invalido o inexistente",
+              "Edad invalido o inexistente",  
+              TIPOS_ERROR.ARGUMENTOS_INVALIDOS
+            ));
           }
 
           let existe = await usuariosManager.getBy({ email: username });
           if (existe) {
-            return done(null, false);
+            return done(CustomError.createError(
+              "Error registro",
+              "Email ya registrado",
+              "Ya existe usuario con ese email",  
+              TIPOS_ERROR.ARGUMENTOS_INVALIDOS
+            ));
           }
 
           password = generateHash(password);
@@ -61,11 +78,26 @@ const usuariosManager = new UsuariosManagerMongo();
         usernameField: "email",
       },
       async (email, password, done) => {
+
+        if(!email || !password) {
+          return done(CustomError.createError(
+            "Datos invalidos",
+            "Datos invalidos",
+            "Datos invalidos",  
+            TIPOS_ERROR.ARGUMENTOS_INVALIDOS
+          ));
+        }
+   
         try {
           let usuario = await usuariosManager.getBy({ email });
 
           if (!usuario) {
-            return done(null, false, { message: "Usuario no encontrado" });
+            return done(CustomError.createError(
+              "Usuario no encontrado",
+              "Usuario no encontrado",
+              "Usuario no encontrado",  
+              TIPOS_ERROR.ARGUMENTOS_INVALIDOS
+            ));
           }
 
           const validPassword = await validaPassword(
@@ -73,7 +105,12 @@ const usuariosManager = new UsuariosManagerMongo();
             usuario.password
           );
           if (!validPassword) {
-            return done(null, false, { message: "Contraseña incorrecta" });
+            return done(CustomError.createError(
+              "Contraseña incorrecta",
+              "Contraseña incorrecta",
+              "Contraseña incorrecta",  
+              TIPOS_ERROR.ARGUMENTOS_INVALIDOS
+            ));
           }
 
           return done(null, usuario);
