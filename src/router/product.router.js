@@ -12,4 +12,4 @@ router.post("/", authADM, ProductosControler.postProduct);
 
 router.put("/:pid", ProductosControler.putProduct);
 
-router.delete("/:pid", ProductosControler.deleteProduct);
+router.delete("/:pid", authADM, ProductosControler.deleteProduct);

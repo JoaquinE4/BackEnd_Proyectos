@@ -28,3 +28,13 @@ console.log(user.cart)
       return next();  
     })(req, res, next);  
 }}
+
+export const idInvalido = (id, description) => {
+  if (!(isValidObjectId(id))) {
+    errorName = 'ObjectId no valido'
+    return CustomError.createError(errorName,
+      errorCause('addProductToCart', errorName, `${description} isValidObjectId: ${isValidObjectId(id)} - value: ${id}`),
+      "Favor de corrigir el argumento", TIPOS_ERROR.ARGUMENTOS_INVALIDOS)
+  }
+
+}

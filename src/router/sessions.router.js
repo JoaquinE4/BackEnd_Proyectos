@@ -9,6 +9,7 @@ import jwt from "jsonwebtoken";
 import { transporter } from "../utils/Mailin.js";
 import { CustomError } from "../utils/CustomError.js";
 import { TIPOS_ERROR } from "../utils/Error.js";
+import { isValidObjectId } from "mongoose";
 
 export const router = Router();
 let usuariosManager = new UsuariosManager();
@@ -45,6 +46,7 @@ router.post("/registro", passportCall("registro"), async (req, res) => {
   let userClean = new UsuarioDTO(req.session.user);
 
   req.session.user = userClean;
+  console.log(userClean);
   res.setHeader("Content-Type", "application/json");
   return res.status(201).json(req.session.user);
 });
@@ -141,7 +143,7 @@ router.post("/reset-password/:token", async (req, res) => {
       "contraseña invalida",
       "La contraseña no puede ser la misma",
       TIPOS_ERROR.ARGUMENTOS_INVALIDOS
-    )
+    );
   }
 
   let password = generateHash(newPassword);
@@ -156,7 +158,7 @@ router.post("/reset-password/:token", async (req, res) => {
       "Error al modificar la contraseña",
       "Error al modificar la contraseña",
       TIPOS_ERROR.ARGUMENTOS_INVALIDOS
-    )
+    );
   }
 });
 
@@ -191,6 +193,47 @@ router.put("/premium/:uid", async (req, res, next) => {
         TIPOS_ERROR.INTERNAL_SERVER_ERROR
       );
     }
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.delete("/eliminar/:uid", async (req, res, next) => {
+  let { uid } = req.params;
+  console.log(uid)
+  try {
+    if (!uid) {
+      CustomError.createError(
+        "URL incompleto",
+        "URL incompleto",
+        "Error en la direccion del usuario",
+        TIPOS_ERROR.ARGUMENTOS_INVALIDOS
+      );
+    }
+
+    if (!isValidObjectId(uid)) {
+      CustomError.createError(
+        "ID invalido",
+        "ID invalido",
+        "ID invalido",
+        TIPOS_ERROR.AUTENTICACION
+      );
+    }
+
+    let usuario = await usuariosManager.getBy({ _id: uid });
+
+    if (!usuario) {
+      CustomError.createError(
+        "Error al buscar el usuario",
+        "Error al buscar el usuario",
+        "Error al buscar el usuario",
+        TIPOS_ERROR.INTERNAL_SERVER_ERROR
+      );
+    }
+
+    let eliminado = await usuariosManager.delete(usuario._id);
+    res.setHeader("Content-Type", "application/json");
+    return res.status(200).json({ payload: "Usuario eliminado" });
   } catch (error) {
     next(error);
   }

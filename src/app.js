@@ -39,6 +39,7 @@ app.use(
       ttl: 3600,
       mongoUrl: config.MONGO_URL_DB,
     }),
+    cookie: { secure: false }
   })
 );
 
@@ -71,7 +72,6 @@ app.use("/api/sessions", sessionsRouter);
 app.use("/api/productos", productosRouter);
 app.use("/api/carts", cartsRouter);
 app.use("/", vistasRouter);
-app.use(errorHandler)
 
  
  let usuarios = [];
@@ -114,3 +114,6 @@ const conecDB = async () => {
   }
 };
 conecDB();
+
+app.use(errorHandler)
+

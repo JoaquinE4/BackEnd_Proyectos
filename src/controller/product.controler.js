@@ -1,3 +1,4 @@
+import { isValidObjectId } from "mongoose";
 import { io } from "../app.js";
 import { config } from "../config/congif.js";
 import { productosService } from "../repository/Products.service.js";
@@ -52,25 +53,28 @@ export class ProductosControler {
   };
 
   static getProductId = async (req, res, next) => {
-    let id = req.params.pid;
+   
+     let { pid } = req.params
 
-    if (!isNaN(id)) {
-      CustomError.createError(
-        "Error ID invalido",
-        "Error ID invalido",
-        "Error ID invalido",
-        TIPOS_ERROR.ARGUMENTOS_INVALIDOS
-      );
-    }
-
+    
     try {
-      let productId = await productosService.getProductByCode({ _id: id });
-      if(!productId.ok){
+      if (!isValidObjectId(pid)) {
+        CustomError.createError(
+          "Error ID invalido",
+          "Error ID invalido",
+          "Error ID invalido",
+          TIPOS_ERROR.TIPO_DE_DATOS
+        );
+      }
+
+      let productId = await productosService.getProductByCode({ _id: pid });
+
+      if(!productId){
         return CustomError.createError(
           "Error No se encontro Producto",
           "Error No se encontro Producto",
           "Error No se encontro Producto",
-          TIPOS_ERROR.INTERNAL_SERVER_ERROR
+          TIPOS_ERROR.NOT_FOUD
         ) 
       }
       req.logger.debug("Exito al buscar producto" + productId);
@@ -141,29 +145,50 @@ export class ProductosControler {
   };
 
   static putProduct = async (req, res, next) => {
-    let id = req.params.pid;
+    let { pid } = req.params
     let updatedFields = req.body;
-    id = Number(id);
-    if (isNaN(id)) {
-      CustomError.createError(
-        "Error ID invalido",
-        "Error ID invalido",
-        "Error ID invalido",
-        TIPOS_ERROR.ARGUMENTOS_INVALIDOS
-      );
-    }
-
+     
     try {
+      if(Object.keys(updatedFields).length === 0) {
+        CustomError.createError(
+          "Ingrese datos para realizar la actualizacion",
+          "Ingrese datos para realizar la actualizacion",
+          "Ingrese datos para realizar la actualizacion",
+          TIPOS_ERROR.ARGUMENTOS_INVALIDOS
+        )
+      }
+
+      if (!isValidObjectId(pid)) {
+        CustomError.createError(
+          "Error ID  invalido",
+          "Error ID  invalido",
+          "Error  ID invalido",
+          TIPOS_ERROR.TIPO_DE_DATOS
+        );
+      }
+
+      let producto = await productosService.getProductByCode({_id:pid})
+      if(!producto){
+        return CustomError.createError(
+          "Error No se encontro Producto",
+          "Error No se encontro Producto",
+          "Error No se encontro Producto",
+          TIPOS_ERROR.NOT_FOUD
+        ) 
+      }
+
+
+
       let updatedProduct = await productosService.updateProduct(
-        { id },
+        producto._id,
         updatedFields
       );
       req.logger.debug(" Exito al editar producto ");
-
+      let productoActualizado = await productosService.getProductByCode({_id: pid})
       res.setHeader("Content-Type", "application/json");
       return res.status(200).json({
         message: "Producto actualizado correctamente",
-        product: updatedProduct,
+        product: productoActualizado,
       });
     } catch (error) {
       req.logger.error(error);
@@ -177,10 +202,8 @@ export class ProductosControler {
     let usuario = req.session.user;
     let productos
     try {
-      let producto = await productosService.getProductByCode({ _id: id });
-      console.log(producto);
       
-    if (!isNaN(id)) {
+    if (!isValidObjectId(id)) {
       CustomError.createError(
         "Error ID invalido",
         "Error ID invalido",
@@ -188,6 +211,18 @@ export class ProductosControler {
         TIPOS_ERROR.ARGUMENTOS_INVALIDOS
       );
     }
+      let producto = await productosService.getProductByCode({ _id: id });
+
+      if(!producto){
+        CustomError.createError(
+          "Producto no encontrado",
+          "Producto no encontrado",
+          "Producto no encontrado",
+          TIPOS_ERROR.TIPO_DE_DATOS
+
+        )
+
+      }
 
     if(usuario.rol === "admin"){
       let eliminarproducto = await productosService.deleteProduct({ _id: id });
@@ -195,8 +230,13 @@ export class ProductosControler {
     }else if(usuario.rol === "premium"){
 
       if(producto.owner != usuario._id){
-        res.setHeader("Content-Type", "application/json");
-        return res.status(403).json({ error: "No tienes permisos para eliminar este producto" });
+        CustomError.createError(
+          "No tenes autorizacion para eliminar el producto",
+          "No tenes autorizacion para eliminar el producto",
+          "No tenes autorizacion para eliminar el producto",
+          TIPOS_ERROR.TIPO_DE_DATOS
+
+        )
       }
 
       let eliminarproducto = await productosService.deleteProduct({ _id: id });

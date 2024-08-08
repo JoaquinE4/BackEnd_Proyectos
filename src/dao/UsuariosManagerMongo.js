@@ -39,4 +39,8 @@ export class UsuariosManagerMongo {
   );
   }
 
+  async delete(id) {
+    return await usuarioModelo.findByIdAndDelete(id);
+  }
+
 }

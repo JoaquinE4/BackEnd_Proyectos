@@ -1,6 +1,11 @@
 export class UsuarioDTO {
   constructor(usuario) {
-    delete usuario.password;
-    return usuario;
+    this._id = usuario._id
+    this.first_name = usuario.first_name
+    this.last_name = usuario.last_name ? usuario.last_name : null
+    this.age = usuario.age
+    this.email = usuario.email
+    this.cart = usuario.cart
+    this.rol = usuario.rol
   }
 }

@@ -4,7 +4,7 @@
   "type": "module",
   "main": "src/app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "mocha ./test/**/*.js",
     "dev": "  nodemon src/app.js -m dev",
     "prod": "  nodemon src/app.js -m prod"
   },
@@ -35,6 +35,10 @@
   },
   "description": "PostMan EndoPoints: https://documenter.getpostman.com/view/34678272/2sA3JM5fsD",
   "devDependencies": {
-    "@faker-js/faker": "^8.4.1"
+    "@faker-js/faker": "^8.4.1",
+    "chai": "^5.1.1",
+    "mocha": "^10.7.0",
+    "supertest": "^7.0.0",
+    "supertest-session": "^5.0.1"
   }
 }

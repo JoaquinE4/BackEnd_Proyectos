@@ -18,9 +18,8 @@ export class ProductManagerMongo {
   }
 
   async updateProduct(id, updatedFields) {
-    const producto = await ProductosModels.findOne(id);
     const aModificar = await ProductosModels.findOneAndUpdate(
-      id,
+      {_id: id},
       updatedFields,
       { returnOriginal: false }
     );

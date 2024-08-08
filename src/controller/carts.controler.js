@@ -103,7 +103,7 @@ export class CartsControler {
 
       return res
         .status(200)
-        .json({ Message: "Se eliminaron todos los productos" });
+        .json({ message: "Se eliminaron todos los productos" });
     } catch (error) {
       req.logger.error(error);
 
@@ -136,9 +136,12 @@ export class CartsControler {
           .json({ message: "Carrito actualizado correctamente" });
       } else {
         res.setHeader("Content-Type", "application/json");
-        return res
-          .status(404)
-          .json({ error: `No se encontró el carrito con el id ${cid}` });
+        CustomError.createError(
+          "No se encontro el carrito",
+          "No se encontro el carrito",
+          "No se encontro el carrito",
+          TIPOS_ERROR.ARGUMENTOS_INVALIDOS
+        )
       }
     } catch (error) {
       req.logger.error(error);
@@ -237,6 +240,8 @@ export class CartsControler {
         res.setHeader("Content-Type", "application/json");
         return res.status(200).json({ payload: "Carrito actualizado" });
       }
+      res.setHeader("Content-Type", "application/json");
+      return res.status(200).json({ payload: "Carrito actualizado" });
     } catch (error) {
       req.logger.error(error);
 
